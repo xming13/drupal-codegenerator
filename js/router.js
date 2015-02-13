@@ -20,7 +20,7 @@ define([
             console.log('bootstrap', bootstrap);
             console.log('Backbone', Backbone);
             console.log('Backboneform', Backboneform);
-            console.log('Backboneform', list);
+            console.log('List', list);
 
             Backboneform.editors.List.Modal.ModalAdapter = Backbone.BootstrapModal;
 

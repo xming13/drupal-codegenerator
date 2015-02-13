@@ -4,21 +4,43 @@
     <title>Drupal auto generate schema and entity info</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <style>
+        .description {
+            background: #89FDF9;
+            padding: 10px;
+        }
+        div[data-error] { color: red; }
+
+        pre { padding: 5px; margin: 5px; }
+        pre .string { color: green; }
+        pre .number { color: darkorange; }
+        pre .boolean { color: blue; }
+        pre .null { color: magenta; }
+        pre .key { color: red; }
+    </style>
 </head>
 <body>
-<h1>Hello, world!</h1>
-<section id="drupal-app">
+<h1>Code generator</h1>
 
-</section>
+<div class="description">
+    This application provides an UI to auto generate code for hook_schema() in Drupal.
+</div>
+
+<section id="form"></section>
+
+<div id="hook-schema">
+    <pre></pre>
+</div>
+
 <script src="js/libs/jquery/jquery.1.9.1.min.js"></script>
 <script src="js/libs/underscore/underscore-min.js"></script>
 <script src="js/libs/backbone/backbone.js"></script>
-<script src="js/libs/backbone/backbone-forms.min.js"></script>
+<script src="js/libs/backbone/backbone-forms.js"></script>
 <script src="js/libs/bootstrap/backbone.bootstrap.js"></script>
 <script src="js/libs/backbone/backbone.localStorage.js"></script>
 <script src="js/libs/backbone/backbone.bootstrap-modal.js"></script>
 <script src="js/libs/backbone/list.min.js"></script>
 <script src="js/libs/bootstrap/bootstrap.min.js"></script>
-<script src="js/drupalhook.js"></script>
+<script src="js/code-generator.js"></script>
 </body>
 </html>
