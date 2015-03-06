@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
     <style>
         .description {
-            background: #89FDF9;
+            background: lightgreen;
             padding: 10px;
         }
         div[data-error] { color: red; }
@@ -17,20 +17,44 @@
         pre .boolean { color: blue; }
         pre .null { color: magenta; }
         pre .key { color: red; }
+
+        .hook-entity-info {
+            padding: 10px;
+            background-color: lightcyan;
+        }
+        .hook-schema {
+            padding: 10px;
+            background-color: lightblue;
+        }
+
+        #form-hook-entity-info,
+        #code-hook-entity-info {
+            display: inline-block;
+            width: 49%;
+            vertical-align: top;
+        }
     </style>
 </head>
 <body>
 <h1>Code generator</h1>
 
 <div class="description">
-    This application provides an UI to auto generate code for hook_schema() in Drupal.
+    This application provides an UI to auto generate code for hook_entity_info() and hook_schema() in Drupal.
 </div>
 
-<section id="form"></section>
+<section class="hook-entity-info">
+    <div id="form-hook-entity-info"></div>
+    <div id="code-hook-entity-info">
+        <pre></pre>
+    </div>
+</section>
 
-<div id="hook-schema">
-    <pre></pre>
-</div>
+<section  class="hook-schema">
+    <div id="form-hook-schema"></div>
+    <div id="code-hook-schema">
+        <pre></pre>
+    </div>
+</section>
 
 <script src="js/libs/jquery/jquery.1.9.1.min.js"></script>
 <script src="js/libs/underscore/underscore-min.js"></script>
