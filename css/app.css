@@ -29,9 +29,28 @@ pre .key {
   background-color: lightcyan;
   overflow: auto; }
 
+#code-hook-entity-info {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%); }
+
 .hook-schema {
   padding: 10px;
   background-color: lightblue;
   overflow: auto; }
+
+.bbf-list li {
+  overflow: auto; }
+
+.bbf-list-item {
+  width: calc(100% - 13px);
+  cursor: pointer; }
+
+.bbf-del,
+.bbf-del:hover {
+  float: right;
+  border-radius: 50%;
+  color: red; }
 
 /*# sourceMappingURL=app.css.map */

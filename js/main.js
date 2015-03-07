@@ -170,6 +170,46 @@ require([
         }
 
         function initFormHookEntityInfo() {
+            var renderViewMode =  _.template(
+                "        '<%= view_mode_name %>' => array(\n" +
+                "          'label' => t('<%= label %>'),\n" +
+                "          'custom settings' => <%= custom_settings %>,\n" +
+                "        ),");
+
+            var viewMode = Backbone.Model.extend({
+                schema: {
+                    'view_mode_name': {
+                        type: 'Text',
+                        title: 'View Mode Name',
+                        help: 'The name of the view mode.',
+                        validators: ['required']
+                    },
+                    'label': {
+                        type: 'Text',
+                        title: 'Label',
+                        help: 'The human-readable name of the view mode.',
+                        validators: ['required']
+                    },
+                    'custom_settings': {
+                        type: 'Radio',
+                        title: 'Custom Settings',
+                        options: ['TRUE', 'FALSE'],
+                        help: 'A boolean specifying whether the view mode should by default use its own custom field display settings. ' +
+                            'If FALSE, entities displayed in this view mode will reuse the \'default\' display settings by default (e.g. right after the module exposing the view mode is enabled), ' +
+                            'but administrators can later use the Field UI to apply custom display settings specific to the view mode.'
+                    }
+                },
+                defaults: {
+                    'custom_settings': 'FALSE'
+                },
+                toCode: function() {
+                    return renderViewMode(this.attributes);
+                },
+                toString: function() {
+                    return '<pre><code>' + hljs.highlight('php5', this.toCode()).value + '</code></pre>';
+                }
+            })
+
             var entityInfo = Backbone.Model.extend({
                 schema: {
                     'machine_name': {
@@ -269,7 +309,12 @@ require([
                     'entity_keys': { type: 'Text', title: 'Entity Keys' },
                     'bundle_keys': { type: 'Text', title: 'Bundle Keys' },
                     'bundles': 'Text',
-                    'view_modes': { type: 'Text', title: 'View Modes' }
+                    'view_modes': {
+                        type: 'List',
+                        title: 'View Modes',
+                        itemType: 'NestedModel',
+                        model: viewMode
+                    }
                 },
                 defaults: {
                     'static_cache': 'FALSE',
@@ -299,6 +344,15 @@ require([
 <% if (translation) { %>\
       'translation' => '<%= translation %>',\n\
 <% } %>\
+\
+<% if (view_modes) { %>\
+      'view modes' => array(\
+<% _.each(view_modes, function(viewMode) { %>\
+\n\
+<%= renderViewMode(viewMode) %>\
+<% }); %>\n\
+       ),\n\
+<% } %>\
     ),\n\
   );\n\
   \n\
@@ -306,7 +360,11 @@ require([
 }\
 "),
                 toCode: function () {
+                    this.attributes.renderViewMode = renderViewMode;
                     return this.codeTemplate(this.attributes);
+                },
+                toString: function() {
+                    return hljs.highlight('php5', this.toCode()).value;
                 }
             });
 
@@ -317,7 +375,9 @@ require([
             }).render();
 
             form.on('machine_name:change', function (form, machineNameEditor) {
+
                 var machineName = machineNameEditor.getValue();
+
                 form.setValue({
                     label: s.humanize(machineName),
                     controller_class: s.classify(machineName) + 'Controller',
@@ -327,14 +387,15 @@ require([
                 });
             });
 
+            form.on('item:change', function(form, editor) {
+
+            });
+
             form.on('change', function (form) {
 
                 form.commit();
 
-                $('#code-hook-entity-info pre code').html(entityInfoModel.toCode())
-                    .each(function (i, block) {
-                        hljs.highlightBlock(block);
-                    });
+                $('#code-hook-entity-info pre code').html(entityInfoModel.toString());
             });
 
             $('#form-hook-entity-info').append(form.el);

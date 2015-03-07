@@ -53,22 +53,23 @@
 
         Form.editors.List.template = _.template('\
       <div class="bbf-list">\
-        <ul class="unstyled clearfix" data-items></ul>\
-        <button type="button" class="btn bbf-add" data-action="add">Add</button>\
+        <ul class="list-group clearfix" data-items></ul>\
+        <button type="button" class="btn btn-primary btn-sm bbf-add" data-action="add">Add</button>\
       </div>\
     ');
 
 
         Form.editors.List.Item.template = _.template('\
-      <li class="clearfix">\
-        <div class="pull-left" data-editor></div>\
-        <button type="button" class="btn bbf-del" data-action="remove">&times;</button>\
+      <li class="list-group-item clearfix">\
+        <div class="pull-left bbf-list-item" data-editor></div>\
+        <button type="button" class="close bbf-del" data-action="remove" aria-label="Close">\
+            <span aria-hidden="true">&times;</span>\
+        </button>\
       </li>\
     ');
 
-
         Form.editors.List.Object.template = Form.editors.List.NestedModel.template = _.template('\
-      <div class="bbf-list-modal"><%= summary %></div>\
+      <%= summary %>\
     ');
 
     }
