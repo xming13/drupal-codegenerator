@@ -27,7 +27,8 @@ requirejs.config({
         },
         "backbone.bootstrap-modal": ["jquery", "underscore", "backbone"],
         "backbone-forms.bootstrap": ["backbone"],
-        localStorage: ["backbone"]
+        localStorage: ["backbone"],
+        bootstrap: ["jquery"]
     },
 
     deps: ['jquery', 'underscore', 'backbone']
@@ -321,7 +322,7 @@ require([
                     'field_cache': 'TRUE',
                     'fieldable': 'TRUE'
                 },
-                codeTemplate: _.template("function hook_entity_info() {\n\
+                codeTemplate: _.template("function YOUR_MODULE_NAME_entity_info() {\n\
   $return = array(\n\
     '<%= machine_name %>' => array(\n\
       'label' => t('<%= label %>'),\n\

@@ -1,4 +1,4 @@
-    /**
+ /**
  * Bootstrap Modal wrapper for use with Backbone.
  * 
  * Takes care of instantiation, manages multiple modals,
