@@ -177,6 +177,49 @@ require([
                 "          'custom settings' => <%= custom_settings %>,\n" +
                 "        ),");
 
+            /* Nested Models */
+            var entityKey = Backbone.Model.extend({
+                schema: {
+                    'id': {
+                        type: 'Text',
+                        title: 'ID',
+                        validators: ['required'],
+                        help: 'The name of the property that contains the primary id of the entity. Every entity object passed to the Field API must have this property and its value must be numeric.'
+                    },
+                    'revision': {
+                        type: 'Text',
+                        title: 'Revision',
+                        help: 'The name of the property that contains the revision id of the entity. ' +
+                            'The Field API assumes that all revision ids are unique across all entities of a type. ' +
+                            'This entry can be omitted if the entities of this type are not versionable.'
+                    },
+                    'bundle': {
+                        type: 'Text',
+                        title: 'Bundle',
+                        help: 'The name of the property that contains the bundle name for the entity. ' +
+                            'The bundle name defines which set of fields are attached to the entity (e.g. what nodes call "content type"). ' +
+                            'This entry can be omitted if this entity type exposes a single bundle (all entities have the same collection of fields). ' +
+                            'The name of this single bundle will be the same as the entity type.'
+                    },
+                    'label': {
+                        type: 'Text',
+                        title: 'Label',
+                        help: 'The name of the property that contains the entity label. ' +
+                            'For example, if the entity\'s label is located in $entity->subject, then \'subject\' should be specified here. ' +
+                            'If complex logic is required to build the label, a \'label callback\' should be defined instead ' +
+                            '(see the \'label callback\' section above for details).'
+                    },
+                    'language': {
+                        type: 'Text',
+                        title: 'Language',
+                        help: 'The name of the property, typically \'language\', that contains the language code representing the language the entity has been created in. ' +
+                            'This value may be changed when editing the entity and represents the language its textual components are supposed to have. ' +
+                            'If no language property is available, the \'language callback\' may be used instead. ' +
+                            'This entry can be omitted if the entities of this type are not language-aware.'
+                    }
+                }
+            });
+
             var viewMode = Backbone.Model.extend({
                 schema: {
                     'view_mode_name': {
@@ -211,6 +254,7 @@ require([
                 }
             })
 
+            /* Main Model */
             var entityInfo = Backbone.Model.extend({
                 schema: {
                     'machine_name': {
@@ -307,7 +351,12 @@ require([
                         type: 'Text',
                         help: 'An associative array of modules registered as field translation handlers. Array keys are the module names, array values can be any data structure the module uses to provide field translation. Any empty value disallows the module to appear as a translation handler.'
                     },
-                    'entity_keys': { type: 'Text', title: 'Entity Keys' },
+                    'entity_keys': {
+                        type: 'NestedModel',
+                        title: 'Entity Keys',
+                        model: entityKey,
+                        help: 'An array describing how the Field API can extract the information it needs from the objects of the type.'
+                    },
                     'bundle_keys': { type: 'Text', title: 'Bundle Keys' },
                     'bundles': 'Text',
                     'view_modes': {
@@ -345,7 +394,21 @@ require([
 <% if (translation) { %>\
       'translation' => '<%= translation %>',\n\
 <% } %>\
-\
+      'entity keys' => array(\n\
+        'id' => '<%= entity_keys.id %>',\n\
+<% if (entity_keys.revision) { %>\
+        'revision' => '<%= entity_keys.revision %>',\n\
+<% } %>\
+<% if (entity_keys.bundle) { %>\
+        'bundle' => '<%= entity_keys.bundle %>',\n\
+<% } %>\
+<% if (entity_keys.label) { %>\
+        'label' => '<%= entity_keys.label %>',\n\
+<% } %>\
+<% if (entity_keys.language) { %>\
+        'language' => '<%= entity_keys.language %>',\n\
+<% } %>\
+      ),\n\
 <% if (view_modes) { %>\
       'view modes' => array(\
 <% _.each(view_modes, function(viewMode) { %>\
@@ -371,6 +434,7 @@ require([
 
             var entityInfoModel = new entityInfo();
 
+            /* Form */
             var form = new Backbone.Form({
                 model: entityInfoModel
             }).render();
