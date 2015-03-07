@@ -1,70 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Drupal code generator for hook_schema() and hook_entity_info()</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-    <style>
-        .description {
-            background: lightgreen;
-            padding: 10px;
-        }
-        div[data-error] { color: red; }
-
-        pre { padding: 5px; margin: 5px; }
-        pre .string { color: green; }
-        pre .number { color: darkorange; }
-        pre .boolean { color: blue; }
-        pre .null { color: magenta; }
-        pre .key { color: red; }
-
-        .hook-entity-info {
-            padding: 10px;
-            background-color: lightcyan;
-        }
-        .hook-schema {
-            padding: 10px;
-            background-color: lightblue;
-        }
-
-        #form-hook-entity-info,
-        #code-hook-entity-info {
-            display: inline-block;
-            width: 49%;
-            vertical-align: top;
-        }
-    </style>
+    <link type="text/css" rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="css/app.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 </head>
 <body>
 <h1>Code generator</h1>
 
-<div class="description">
+<div class="description blue lighten-4">
     This application provides an UI to auto generate code for hook_entity_info() and hook_schema() in Drupal.
 </div>
 
 <section class="hook-entity-info">
-    <div id="form-hook-entity-info"></div>
-    <div id="code-hook-entity-info">
+    <div id="form-hook-entity-info" class="col-sm-6"></div>
+    <div id="code-hook-entity-info" class="col-sm-6">
         <pre></pre>
     </div>
 </section>
 
-<section  class="hook-schema">
-    <div id="form-hook-schema"></div>
-    <div id="code-hook-schema">
+<section class="hook-schema">
+    <div id="form-hook-schema" class="col-sm-6"></div>
+    <div id="code-hook-schema" class="col-sm-6">
         <pre></pre>
     </div>
 </section>
 
-<script src="js/libs/jquery/jquery.1.9.1.min.js"></script>
-<script src="js/libs/underscore/underscore-min.js"></script>
-<script src="js/libs/backbone/backbone.js"></script>
-<script src="js/libs/backbone/backbone-forms.js"></script>
-<script src="js/libs/backbone/backbone.bootstrap.js"></script>
-<script src="js/libs/backbone/backbone.localStorage.js"></script>
-<script src="js/libs/backbone/backbone.bootstrap-modal.js"></script>
-<script src="js/libs/backbone/list.min.js"></script>
-<script src="js/libs/bootstrap/bootstrap.min.js"></script>
-<script src="js/code-generator.js"></script>
+<script data-main="js/main" src="bower_components/requirejs/require.js"></script>
+<!--<script src="js/libs/jquery/jquery.1.9.1.min.js"></script>-->
+<!--<script src="js/libs/material/materialize.min.js"></script>-->
+<!--<script src="js/libs/underscore/underscore-min.js"></script>-->
+<!--<script src="js/libs/backbone/backbone.js"></script>-->
+<!--<script src="js/libs/backbone/backbone-forms.js"></script>-->
+<!--<script src="js/libs/backbone/backbone.bootstrap.js"></script>-->
+<!--<script src="js/libs/backbone/backbone.localStorage.js"></script>-->
+<!--<script src="js/libs/backbone/backbone.bootstrap-modal.js"></script>-->
+<!--<script src="js/libs/backbone/list.min.js"></script>-->
+<!--<script src="js/libs/bootstrap/bootstrap.min.js"></script>-->
+<!--<script src="js/app.js"></script>-->
 </body>
 </html>

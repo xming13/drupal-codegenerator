@@ -1,0 +1,37 @@
+div[data-error] {
+  color: red; }
+
+pre {
+  padding: 5px;
+  margin: 5px; }
+
+pre .string {
+  color: green; }
+
+pre .number {
+  color: darkorange; }
+
+pre .boolean {
+  color: blue; }
+
+pre .null {
+  color: magenta; }
+
+pre .key {
+  color: red; }
+
+.description {
+  padding: 10px;
+  background: lightgreen; }
+
+.hook-entity-info {
+  padding: 10px;
+  background-color: lightcyan;
+  overflow: auto; }
+
+.hook-schema {
+  padding: 10px;
+  background-color: lightblue;
+  overflow: auto; }
+
+/*# sourceMappingURL=app.css.map */
