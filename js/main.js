@@ -257,15 +257,20 @@ require([
             /* Main Model */
             var entityInfo = Backbone.Model.extend({
                 schema: {
+                    'module_name': {
+                        type: 'Text',
+                        title: 'Module Name',
+                        help: 'The name of the module that implements the hook.'
+                    },
                     'machine_name': {
                         type: 'Text',
                         title: 'Machine Name',
-                        help: 'This will be used to auto generate some of the field values in this form.',
+                        help: 'The machine name of the entity. It will be used to auto generate some of the field values in this form.',
                         validators: [
                             {
                                 type: 'regexp',
                                 regexp: /^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/,
-                                message: 'The machine-readable name must contain only lowercase letters, numbers, and underscores. First character cannot be number.'
+                                message: 'The machine-readable name must contain only lowercase letters, numbers, and underscores. Also, the first character cannot be number.'
                             }
                         ]
                     },
@@ -367,11 +372,12 @@ require([
                     }
                 },
                 defaults: {
+                    'module_name': 'YOUR_MODULE_NAME',
                     'static_cache': 'FALSE',
                     'field_cache': 'TRUE',
                     'fieldable': 'TRUE'
                 },
-                codeTemplate: _.template("function YOUR_MODULE_NAME_entity_info() {\n\
+                codeTemplate: _.template("function <%= module_name %>_entity_info() {\n\
   $return = array(\n\
     '<%= machine_name %>' => array(\n\
       'label' => t('<%= label %>'),\n\
