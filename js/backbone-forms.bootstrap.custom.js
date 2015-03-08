@@ -29,7 +29,11 @@
       <div class="col-sm-9">\
         <span data-editor></span>\
         <p class="help-block" data-error></p>\
-        <p class="help-block"><%= help %></p>\
+        <p class="help-block"><%= help %>\
+        <% if (tooltipHelp) { %>\
+            <span class="glyphicon glyphicon-info-sign" tabindex="0" aria-hidden="true" data-toggle="popover" data-content="<%= tooltipHelp %>"></span>\
+        <% } %>\
+        </p>\
       </div>\
     </div>\
   ');
@@ -44,6 +48,40 @@
       <div class="help-block"><%= help %></div>\
     </div>\
   ');
+
+    /** Form.Field extend */
+    Form.Field = Form.Field.extend({
+        initialize: function(options) {
+            options = options || {};
+
+            //Store important data
+            _.extend(this, _.pick(options, 'form', 'key', 'model', 'value', 'idPrefix', 'tooltipHelp'));
+
+            //Create the full field schema, merging defaults etc.
+            var schema = this.schema = this.createSchema(options.schema);
+
+            //Override defaults
+            this.template = options.template || schema.template || this.constructor.template;
+            this.errorClassName = options.errorClassName || this.constructor.errorClassName;
+
+            //Create editor
+            this.editor = this.createEditor();
+        },
+
+        templateData: function() {
+            var schema = this.schema;
+
+            return {
+                help: schema.help || '',
+                title: schema.title,
+                fieldAttrs: schema.fieldAttrs,
+                editorAttrs: schema.editorAttrs,
+                key: this.key,
+                editorId: this.editor.id,
+                tooltipHelp: schema.tooltipHelp
+            };
+        }
+    });
 
     Form.editors.Base.prototype.className = '';
     Form.Field.errorClassName = 'has-error';
@@ -72,6 +110,105 @@
       <%= summary %>\
     ');
 
+        Form.editors.List.NestedModel = Form.editors.List.NestedModel.extend({
+            initialize: function() {
+                Form.editors.List.Modal.prototype.initialize.apply(this, arguments);
+
+                var schema = this.schema;
+
+                console.log(schema, 'schema');
+
+                if (!schema.model) throw new Error('Missing required option "schema.model"');
+
+                console.log(schema.model, 'schema.model');
+
+                var nestedSchema = schema.model.prototype.schema;
+
+                console.log(nestedSchema, 'nestedSchema');
+
+                this.nestedSchema = (_.isFunction(nestedSchema)) ? nestedSchema() : nestedSchema;
+
+                console.log(this.nestedSchema, 'this.nestedSchema');
+
+                var defaults = this.defaults;
+
+                console.log(defaults, 'defaults');
+            }
+        });
+
+        Form.editors.List.Modal = Form.editors.List.Modal.extend({
+            initialize: function(options) {
+                console.log('initialize options', options);
+
+                options = options || {};
+
+                Form.editors.Base.prototype.initialize.call(this, options);
+
+                //Dependencies
+                if (!Form.editors.List.Modal.ModalAdapter) throw new Error('A ModalAdapter is required');
+
+                this.form = options.form;
+                if (!options.form) throw new Error('Missing required option: "form"');
+
+                //Template
+                this.template = options.template || this.constructor.template;
+            },
+
+            /**
+             * Render the list item representation
+             */
+            render: function() {
+                console.log('render');
+
+                var self = this;
+
+                //New items in the list are only rendered when the editor has been OK'd
+                if (_.isEmpty(this.value)) {
+                    this.openEditor();
+                }
+
+                //But items with values are added automatically
+                else {
+                    this.renderSummary();
+
+                    setTimeout(function() {
+                        self.trigger('readyToAdd');
+                    }, 0);
+                }
+
+                if (this.hasFocus) this.trigger('blur', this);
+
+                return this;
+            },
+
+            openEditor: function() {
+                console.log('openEditor');
+
+                var self = this,
+                    ModalForm = this.form.constructor;
+
+                console.log(this.nestedSchema);
+
+                var form = this.modalForm = new ModalForm({
+                    schema: this.nestedSchema,
+                    data: this.value
+                });
+
+                var modal = this.modal = new Form.editors.List.Modal.ModalAdapter({
+                    content: form,
+                    animate: true
+                });
+
+                modal.open();
+
+                this.trigger('open', this);
+                this.trigger('focus', this);
+
+                modal.on('cancel', this.onModalClosed, this);
+
+                modal.on('ok', _.bind(this.onModalSubmitted, this));
+            }
+        });
     }
 
     /**

@@ -132,6 +132,7 @@
      * @param {Function} [cb]     Optional callback that runs only when OK is pressed.
      */
     open: function(cb) {
+        console.log('open modal');
       if (!this.isRendered) this.render();
 
       var self = this,

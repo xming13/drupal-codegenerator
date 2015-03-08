@@ -28,7 +28,8 @@ requirejs.config({
         "backbone.bootstrap-modal": ["jquery", "underscore", "backbone"],
         "backbone-forms.bootstrap": ["backbone"],
         localStorage: ["backbone"],
-        bootstrap: ["jquery"]
+        bootstrap: ["jquery"],
+        "backbone-forms.bootstrap": ["backbone-forms.list"]
     },
 
     deps: ['jquery', 'underscore', 'backbone']
@@ -184,38 +185,39 @@ require([
                         type: 'Text',
                         title: 'ID',
                         validators: ['required'],
-                        help: 'The name of the property that contains the primary id of the entity. Every entity object passed to the Field API must have this property and its value must be numeric.'
+                        help: "The name of the property that contains the primary id of the entity. ",
+                        tooltipHelp: "Every entity object passed to the Field API must have this property and its value must be numeric."
                     },
                     'revision': {
                         type: 'Text',
                         title: 'Revision',
-                        help: 'The name of the property that contains the revision id of the entity. ' +
-                            'The Field API assumes that all revision ids are unique across all entities of a type. ' +
-                            'This entry can be omitted if the entities of this type are not versionable.'
+                        help: 'The name of the property that contains the revision id of the entity. ',
+                        tooltipHelp: "The Field API assumes that all revision ids are unique across all entities of a type. " +
+                            "This entry can be omitted if the entities of this type are not versionable."
                     },
                     'bundle': {
                         type: 'Text',
                         title: 'Bundle',
-                        help: 'The name of the property that contains the bundle name for the entity. ' +
-                            'The bundle name defines which set of fields are attached to the entity (e.g. what nodes call "content type"). ' +
-                            'This entry can be omitted if this entity type exposes a single bundle (all entities have the same collection of fields). ' +
-                            'The name of this single bundle will be the same as the entity type.'
+                        help: 'The name of the property that contains the bundle name for the entity. ',
+                        tooltipHelp: "The bundle name defines which set of fields are attached to the entity (e.g. what nodes call 'content type'). " +
+                            "This entry can be omitted if this entity type exposes a single bundle (all entities have the same collection of fields). " +
+                            "The name of this single bundle will be the same as the entity type."
                     },
                     'label': {
                         type: 'Text',
                         title: 'Label',
-                        help: 'The name of the property that contains the entity label. ' +
-                            'For example, if the entity\'s label is located in $entity->subject, then \'subject\' should be specified here. ' +
-                            'If complex logic is required to build the label, a \'label callback\' should be defined instead ' +
-                            '(see the \'label callback\' section above for details).'
+                        help: 'The name of the property that contains the entity label. ',
+                        tooltipHelp: "For example, if the entity's label is located in $entity->subject, then 'subject' should be specified here. " +
+                            "If complex logic is required to build the label, a 'label callback' should be defined instead " +
+                            "(see the 'label callback' section above for details)."
                     },
                     'language': {
                         type: 'Text',
                         title: 'Language',
-                        help: 'The name of the property, typically \'language\', that contains the language code representing the language the entity has been created in. ' +
-                            'This value may be changed when editing the entity and represents the language its textual components are supposed to have. ' +
-                            'If no language property is available, the \'language callback\' may be used instead. ' +
-                            'This entry can be omitted if the entities of this type are not language-aware.'
+                        help: 'The name of the property, typically \'language\', that contains the language code representing the language the entity has been created in. ',
+                        tooltipHelp: "This value may be changed when editing the entity and represents the language its textual components are supposed to have. " +
+                            "If no language property is available, the 'language callback' may be used instead. " +
+                            "This entry can be omitted if the entities of this type are not language-aware."
                     }
                 }
             });
@@ -238,9 +240,9 @@ require([
                         type: 'Radio',
                         title: 'Custom Settings',
                         options: ['TRUE', 'FALSE'],
-                        help: 'A boolean specifying whether the view mode should by default use its own custom field display settings. ' +
-                            'If FALSE, entities displayed in this view mode will reuse the \'default\' display settings by default (e.g. right after the module exposing the view mode is enabled), ' +
-                            'but administrators can later use the Field UI to apply custom display settings specific to the view mode.'
+                        help: 'A boolean specifying whether the view mode should by default use its own custom field display settings. ',
+                        tooltipHelp: "If FALSE, entities displayed in this view mode will reuse the \'default\' display settings by default (e.g. right after the module exposing the view mode is enabled), " +
+                            "but administrators can later use the Field UI to apply custom display settings specific to the view mode."
                     }
                 },
                 defaults: {
@@ -271,6 +273,9 @@ require([
                                 type: 'regexp',
                                 regexp: /^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/,
                                 message: 'The machine-readable name must contain only lowercase letters, numbers, and underscores. Also, the first character cannot be number.'
+                            },
+                            {
+                                type: 'required'
                             }
                         ]
                     },
@@ -282,18 +287,19 @@ require([
                     'controller_class': {
                         type: 'Text',
                         title: 'Controller Class',
-                        help: 'The name of the class that is used to load the objects. The class has to implement the ' +
-                            '<a href="https://api.drupal.org/api/drupal/includes%21entity.inc/interface/DrupalEntityControllerInterface/7" target="_blank">DrupalEntityControllerInterface</a> ' +
-                            'interface. Leave blank to use the ' +
-                            '<a href="https://api.drupal.org/api/drupal/includes%21entity.inc/interface/DrupalEntityControllerInterface/7" target="_blank">DrupalDefaultEntityController</a> ' +
-                            'implementation.'
+                        help: 'The name of the class that is used to load the objects.',
+                        tooltipHelp: "The class has to implement the " +
+                            "<a href='https://api.drupal.org/api/drupal/includes%21entity.inc/interface/DrupalEntityControllerInterface/7' target='_blank'>DrupalEntityControllerInterface</a> " +
+                            "interface. Leave blank to use the " +
+                            "<a href='https://api.drupal.org/api/drupal/includes%21entity.inc/interface/DrupalEntityControllerInterface/7' target='_blank'>DrupalDefaultEntityController</a> " +
+                            "implementation."
                     },
                     'base_table': {
                         type: 'Text',
                         title: 'Base Table',
-                        help: '(used by ' +
+                        help: 'The name of the entity type\'s base table. (used by ' +
                             '<a href="https://api.drupal.org/api/drupal/includes%21entity.inc/class/DrupalDefaultEntityController/7" target="_blank">DrupalDefaultEntityController</a>' +
-                            ') The name of the entity type\'s base table.'
+                            ')'
                     },
                     'revision_table': {
                         type: 'Text',
@@ -304,15 +310,18 @@ require([
                         type: 'Radio',
                         title: 'Static Cache',
                         options: ['TRUE', 'FALSE'],
-                        help: '(used by ' +
+                        help: 'FALSE to disable static caching of entities during a page request. Defaults to TRUE. (used by ' +
                             '<a href="https://api.drupal.org/api/drupal/includes%21entity.inc/class/DrupalDefaultEntityController/7" target="_blank">DrupalDefaultEntityController</a>' +
-                            ') FALSE to disable static caching of entities during a page request. Defaults to TRUE.'
+                            ')'
                     },
                     'field_cache': {
                         type: 'Radio',
                         title: 'Field Cache',
                         options: ['TRUE', 'FALSE'],
-                        help: '(used by Field API loading and saving of field data) FALSE to disable Field API\'s persistent cache of field data. Only recommended if a higher level persistent cache is available for the entity type. Defaults to TRUE.'
+                        help: 'FALSE to disable Field API\'s persistent cache of field data. Defaults to TRUE. (used by ' +
+                            '<a href="https://api.drupal.org/api/drupal/modules!field!field.api.php/7" target="_blank">Field API</a>' +
+                            ' loading and saving of field data)',
+                        tooltipHelp: 'Only recommended if a higher level persistent cache is available for the entity type.'
                     },
                     'load_hook': {
                         type: 'Text',
@@ -330,22 +339,23 @@ require([
                         title: 'Label Callback',
                         help: '(optional) The name of an implementation of ' +
                             '<a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/callback_entity_info_label/7" target="_blank">callback_entity_info_label()</a>' +
-                            ', which returns the label of the entity. The entity label is the main string associated with an entity; for example, the title of a node or the subject of a comment. ' +
-                            'If there is an entity object property that defines the label, then using the \'label\' element of the \'entity keys\' return value component suffices to provide this information (see below). ' +
-                            'Alternatively, specifying this callback allows more complex logic to determine the label of an entity. See also the ' +
-                            '<a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/entity_label/7" target="_blank">entity_label()</a>' +
-                            ' function, which implements this logic.'
+                            ', which returns the label of the entity.',
+                        tooltipHelp: "The entity label is the main string associated with an entity; for example, the title of a node or the subject of a comment. " +
+                            "If there is an entity object property that defines the label, then using the 'label' element of the 'entity keys' return value component suffices to provide this information (see below). " +
+                            "Alternatively, specifying this callback allows more complex logic to determine the label of an entity. See also the " +
+                            "<a href='https://api.drupal.org/api/drupal/includes%21common.inc/function/entity_label/7' target='_blank'>entity_label()</a>" +
+                            " function, which implements this logic."
                     },
                     'language_callback': {
                         Type: 'Text',
                         title: 'Language Callback',
                         help: '(optional) The name of an implementation of ' +
-                            '<a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/callback_entity_info_language/7" target="_blank">callback_entity_info_language()</a>. ' +
-                            'In most situations, when needing to determine this value, inspecting a property named after the \'language\' element of the \'entity keys\' should be enough. ' +
-                            'The language callback is meant to be used primarily for temporary alterations of the property value: entity-defining modules are encouraged to always define a language property, ' +
-                            'instead of using the callback as main entity language source. In fact not having a language property defined is likely to prevent an entity from being queried by language. Moreover, given that ' +
-                            '<a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/entity_language/7" target="_blank">entity_language()</a> ' +
-                            'is not necessarily used everywhere it would be appropriate, modules implementing the language callback should be aware that this might not be always called.'
+                            '<a href="https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/callback_entity_info_language/7" target="_blank">callback_entity_info_language()</a>.',
+                        tooltipHelp: "In most situations, when needing to determine this value, inspecting a property named after the 'language' element of the 'entity keys' should be enough. " +
+                            "The language callback is meant to be used primarily for temporary alterations of the property value: entity-defining modules are encouraged to always define a language property, " +
+                            "instead of using the callback as main entity language source. In fact not having a language property defined is likely to prevent an entity from being queried by language. Moreover, given that " +
+                            "<a href='https://api.drupal.org/api/drupal/includes%21common.inc/function/entity_language/7' target='_blank'>entity_language()</a> " +
+                            "is not necessarily used everywhere it would be appropriate, modules implementing the language callback should be aware that this might not be always called.",
                     },
                     'fieldable': {
                         type: 'Radio',
@@ -470,6 +480,8 @@ require([
             });
 
             $('#form-hook-entity-info').append(form.el);
+
+            $('[data-toggle="popover"]').popover({container: 'body', html: true, trigger: 'hover focus', placement: 'auto right'});
         }
     });
 });
