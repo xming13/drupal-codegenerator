@@ -172,13 +172,63 @@ require([
         }
 
         function initFormHookEntityInfo() {
+            var renderTranslation =  _.template(
+                "        '<%= module_name %>' => '<%= value %>'"
+            );
+
             var renderViewMode =  _.template(
                 "        '<%= view_mode_name %>' => array(\n" +
                 "          'label' => t('<%= label %>'),\n" +
                 "          'custom settings' => <%= custom_settings ? custom_settings : 'FALSE' %>,\n" +
-                "        ),");
+                "        ),"
+            );
+
+            var renderBundle = _.template(
+                    "        '<%= bundle_name %>' => array(\n" +
+                    "          'label' => t('<%= label %>'),\n" +
+                    "          'uri callback' => '<%= uri_callback %>',\n" +
+                    "          'admin' => array(\n" +
+                    "<% if (admin.path) { %>" +
+                    "            'path' => '<%= admin.path %>',\n" +
+                    "<% } %>" +
+                    "<% if (admin.bundle_argument) { %>" +
+                    "            'bundle argument' => '<%= admin.bundle_argument %>',\n" +
+                    "<% } %>" +
+                    "<% if (admin.real_path) { %>" +
+                    "            'real path' => '<%= admin.real_path %>',\n" +
+                    "<% } %>" +
+                    "<% if (admin.access_callback) { %>" +
+                    "            'access callback' => '<%= admin.access_callback %>',\n" +
+                    "<% } %>" +
+                    "<% if (admin.access_arguments) { %>" +
+                    "            'access arguments' => '<%= admin.access_arguments %>',\n" +
+                    "<% } %>" +
+                    "          ),\n" +
+                    "        ),"
+            );
 
             /* Nested Models */
+            var translation = Backbone.Model.extend({
+                schema: {
+                    'module_name': {
+                        type: 'Text',
+                        title: 'Module Name',
+                        help: 'The name of the translation module.'
+                    },
+                    'value': {
+                        type: 'Text',
+                        title: 'Value',
+                        help: 'This can be any data structure the module uses to provide field translation.'
+                    }
+                },
+                toCode: function() {
+                    return renderTranslation(this.attributes);
+                },
+                toString: function() {
+                    return '<pre><code>' + hljs.highlight('php5', this.toCode()).value + '</code></pre>';
+                }
+            });
+
             var entityKey = Backbone.Model.extend({
                 schema: {
                     'id': {
@@ -219,6 +269,75 @@ require([
                             "If no language property is available, the 'language callback' may be used instead. " +
                             "This entry can be omitted if the entities of this type are not language-aware."
                     }
+                }
+            });
+
+            var bundleAdmin = Backbone.Model.extend({
+                schema: {
+                    'path': {
+                        type: 'Text',
+                        title: 'Path',
+                        help: "The path of the bundle's main administration page, as defined in " +
+                            "<a href='https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu/7' target='_blank'>hook_menu()</a>.",
+                        tooltipHelp: "If the path includes a placeholder for the bundle, the 'bundle argument' and 'real path' keys below are required."
+                    },
+                    'bundle_argument': {
+                        type: 'Text',
+                        title: 'Bundle Argument',
+                        help: "The position of the bundle placeholder in 'path', if any."
+                    },
+                    'real_path': {
+                        type: 'Text',
+                        title: 'Real Path',
+                        help: "The actual path (no placeholder) of the bundle's main administration page. This will be used to generate links."
+                    },
+                    'access_callback': {
+                        type: 'Text',
+                        title: 'Access Callback',
+                        help: "As in <a href='https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu/7' target='_blank'>hook_menu()</a>." +
+                            " 'user_access' will be assumed if no value is provided."
+                    },
+                    'access_arguments': {
+                        type: 'Text',
+                        title: 'Access Arguments',
+                        help: "As in " +
+                            "<a href='https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_menu/7' target='_blank'>hook_menu()</a>."
+                    }
+                }
+            });
+
+            var bundles = Backbone.Model.extend({
+                schema: {
+                    'bundle_name': {
+                        type: 'Text',
+                        title: 'Bundle Name',
+                        help: 'The name of the bundle.',
+                        validators: ['required']
+                    },
+                    'label': {
+                        type: 'Text',
+                        title: 'Label',
+                        help: 'The human-readable name of the bundle.'
+                    },
+                    'uri_callback': {
+                        type: 'Text',
+                        title: 'URI Callback',
+                        help: "Same as the 'uri callback' key documented above for the entity type, but for the bundle only.",
+                        tooltipHelp: "When determining the URI of an entity, " +
+                            "if a 'uri callback' is defined for both the entity type and the bundle, the one for the bundle is used."
+                    },
+                    'admin': {
+                        type: 'NestedModel',
+                        title: 'Admin',
+                        model: bundleAdmin,
+                        help: 'An array of information that allows Field UI pages to attach themselves to the existing administration pages for the bundle.'
+                    }
+                },
+                toCode: function() {
+                    return renderBundle(this.attributes);
+                },
+                toString: function() {
+                    return '<pre><code>' + hljs.highlight('php5', this.toCode()).value + '</code></pre>';
                 }
             });
 
@@ -363,8 +482,13 @@ require([
                         help: 'Set to TRUE if you want your entity type to accept fields being attached to it.'
                     },
                     'translation': {
-                        type: 'Text',
-                        help: 'An associative array of modules registered as field translation handlers. Array keys are the module names, array values can be any data structure the module uses to provide field translation. Any empty value disallows the module to appear as a translation handler.'
+                        type: 'List',
+                        title: 'Translation',
+                        itemType: 'NestedModel',
+                        model: translation,
+                        help: 'An associative array of modules registered as field translation handlers.',
+                        tooltipHelp: "Array keys are the module names, array values can be any data structure the module uses to provide field translation. " +
+                            "Any empty value disallows the module to appear as a translation handler."
                     },
                     'entity_keys': {
                         type: 'NestedModel',
@@ -373,12 +497,31 @@ require([
                         help: 'An array describing how the Field API can extract the information it needs from the objects of the type.'
                     },
                     'bundle_keys': { type: 'Text', title: 'Bundle Keys' },
-                    'bundles': 'Text',
+                    'bundles': {
+                        type: 'List',
+                        title: 'Bundles',
+                        itemType: 'NestedModel',
+                        model: bundles,
+                        help: "An array describing all bundles for this object type.",
+                        tooltipHelp: "Keys are bundles machine names, as found in the objects' 'bundle' property (defined in the 'entity keys' entry above). " +
+                            "This entry can be omitted if this entity type exposes a single bundle (all entities have the same collection of fields). " +
+                            "The name of this single bundle will be the same as the entity type."
+                    },
                     'view_modes': {
                         type: 'List',
                         title: 'View Modes',
                         itemType: 'NestedModel',
-                        model: viewMode
+                        model: viewMode,
+                        help: "An array describing the view modes for the entity type.",
+                        tooltipHelp: "View modes let entities be displayed differently depending on the context. " +
+                            "For instance, a node can be displayed differently on its own page ('full' mode), " +
+                            "on the home page or taxonomy listings ('teaser' mode), or in an RSS feed ('rss' mode). " +
+                            "Modules taking part in the display of the entity (notably the Field API) can adjust their behavior depending on the requested view mode. " +
+                            "An additional 'default' view mode is available for all entity types. This view mode is not intended for actual entity display, " +
+                            "but holds default display settings. For each available view mode, " +
+                            "administrators can configure whether it should use its own set of field display settings, " +
+                            "or just replicate the settings of the 'default' view mode, thus reducing the amount of display configurations to keep track of. " +
+                            "Keys of the array are view mode names."
                     }
                 },
                 defaults: {
@@ -397,6 +540,9 @@ require([
                     'static_cache': 'FALSE',
                     'field_cache': 'TRUE',
                     'fieldable': 'TRUE',
+                    'translation': [],
+                    'bundle_keys': '',
+                    'bundles': [],
                     'view_modes': []
                 },
                 codeTemplate: _.template("function <%= module_name %>_entity_info() {\n\
@@ -411,7 +557,9 @@ require([
       'static cache' => <%= static_cache %>,\n\
       'field cache' => <%= field_cache %>,\n\
       'load hook' => '<%= load_hook %>',\n\
+<% if (uri_callback) { %>\
       'uri callback' => '<%= uri_callback %>',\n\
+<% } %>\
 <% if (label_callback) { %>\
       'label callback' => '<%= label_callback %>',\n\
 <% } %>\
@@ -419,8 +567,12 @@ require([
       'language callback' => '<%= language_callback %>',\n\
 <% } %>\
       'fieldable' => <%= fieldable %>\n\
-<% if (translation) { %>\
-      'translation' => '<%= translation %>',\n\
+<% if (translation.length > 0) { %>\
+      'translation' => array(\n\
+<% _.each(translation, function(trans) { %>\
+<%= renderTranslation(trans) %>,\n\
+<% }); %>\
+      ),\n\
 <% } %>\
       'entity keys' => array(\n\
         'id' => '<%= entity_keys.id %>',\n\
@@ -437,7 +589,20 @@ require([
         'language' => '<%= entity_keys.language %>',\n\
 <% } %>\
       ),\n\
-<% if (view_modes) { %>\
+<% if (bundle_keys) { %>\
+      'bundle keys' => array(\n\
+        'bundle' => '<%= bundle_keys %>',\n\
+      ),\n\
+<% } %>\
+<% if (bundles.length > 0) { %>\
+      'bundles' => array(\
+<% _.each(bundles, function(bundle) { %>\
+\n\
+<%= renderBundle(bundle) %>\
+<% }); %>\n\
+       ),\n\
+<% } %>\
+<% if (view_modes.length > 0) { %>\
       'view modes' => array(\
 <% _.each(view_modes, function(viewMode) { %>\
 \n\
@@ -452,6 +617,8 @@ require([
 }\
 "),
                 toCode: function () {
+                    this.attributes.renderTranslation = renderTranslation;
+                    this.attributes.renderBundle = renderBundle;
                     this.attributes.renderViewMode = renderViewMode;
                     return this.codeTemplate(this.attributes);
                 },
@@ -476,12 +643,9 @@ require([
                     controller_class: s.classify(machineName) + 'Controller',
                     base_table: machineName,
                     revision_table: machineName + '_revision',
-                    load_hook: machineName + '_load'
+                    load_hook: machineName + '_load',
+                    uri_callback: machineName + '_uri'
                 });
-            });
-
-            form.on('item:change', function(form, editor) {
-
             });
 
             form.on('change', function (form) {
