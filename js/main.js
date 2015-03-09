@@ -175,7 +175,7 @@ require([
             var renderViewMode =  _.template(
                 "        '<%= view_mode_name %>' => array(\n" +
                 "          'label' => t('<%= label %>'),\n" +
-                "          'custom settings' => <%= custom_settings %>,\n" +
+                "          'custom settings' => <%= custom_settings ? custom_settings : 'FALSE' %>,\n" +
                 "        ),");
 
             /* Nested Models */
@@ -240,8 +240,8 @@ require([
                         type: 'Radio',
                         title: 'Custom Settings',
                         options: ['TRUE', 'FALSE'],
-                        help: 'A boolean specifying whether the view mode should by default use its own custom field display settings. ',
-                        tooltipHelp: "If FALSE, entities displayed in this view mode will reuse the \'default\' display settings by default (e.g. right after the module exposing the view mode is enabled), " +
+                        help: "A boolean specifying whether the view mode should by default use its own custom field display settings. " +
+                            "If FALSE, entities displayed in this view mode will reuse the 'default' display settings by default (e.g. right after the module exposing the view mode is enabled), " +
                             "but administrators can later use the Field UI to apply custom display settings specific to the view mode."
                     }
                 },
@@ -383,9 +383,21 @@ require([
                 },
                 defaults: {
                     'module_name': 'YOUR_MODULE_NAME',
+                    'machine_name': '',
+                    'label': '',
+                    'controller_class': '',
+                    'base_table': '',
+                    'revision_table': '',
+                    'load_hook': '',
+                    'uri_callback': '',
+                    'label_callback': '',
+                    'language_callback': '',
+                    'translation': '',
+                    'entity_keys': {},
                     'static_cache': 'FALSE',
                     'field_cache': 'TRUE',
-                    'fieldable': 'TRUE'
+                    'fieldable': 'TRUE',
+                    'view_modes': []
                 },
                 codeTemplate: _.template("function <%= module_name %>_entity_info() {\n\
   $return = array(\n\
@@ -477,9 +489,12 @@ require([
                 form.commit();
 
                 $('#code-hook-entity-info pre code').html(entityInfoModel.toString());
+
             });
 
             $('#form-hook-entity-info').append(form.el);
+
+            $('#code-hook-entity-info pre code').html(entityInfoModel.toString());
 
             $('[data-toggle="popover"]').popover({container: 'body', html: true, trigger: 'hover focus', placement: 'auto right'});
         }
