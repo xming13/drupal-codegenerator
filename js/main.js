@@ -321,7 +321,7 @@ require([
                         help: 'FALSE to disable Field API\'s persistent cache of field data. Defaults to TRUE. (used by ' +
                             '<a href="https://api.drupal.org/api/drupal/modules!field!field.api.php/7" target="_blank">Field API</a>' +
                             ' loading and saving of field data)',
-                        tooltipHelp: 'Only recommended if a higher level persistent cache is available for the entity type.'
+                        tooltipHelp: 'FALSE is only recommended if a higher level persistent cache is available for the entity type.'
                     },
                     'load_hook': {
                         type: 'Text',
