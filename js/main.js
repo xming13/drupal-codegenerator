@@ -644,7 +644,8 @@ require([
                     base_table: machineName,
                     revision_table: machineName + '_revision',
                     load_hook: machineName + '_load',
-                    uri_callback: machineName + '_uri'
+                    uri_callback: machineName + '_uri',
+                    entity_keys: { id: machineName + '_id' }
                 });
             });
 
