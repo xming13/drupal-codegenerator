@@ -566,7 +566,7 @@ require([
 <% if (language_callback) { %>\
       'language callback' => '<%= language_callback %>',\n\
 <% } %>\
-      'fieldable' => <%= fieldable %>\n\
+      'fieldable' => <%= fieldable %>,\n\
 <% if (translation.length > 0) { %>\
       'translation' => array(\n\
 <% _.each(translation, function(trans) { %>\
@@ -608,7 +608,7 @@ require([
 \n\
 <%= renderViewMode(viewMode) %>\
 <% }); %>\n\
-       ),\n\
+      ),\n\
 <% } %>\
     ),\n\
   );\n\
