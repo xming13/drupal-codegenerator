@@ -1,0 +1,36 @@
+{
+  "name": "drupal-codegenerator",
+  "version": "1.0.0",
+  "description": "Code generator for hook_schema() and hook_entity_info() for Drupal",
+  "main": "index.js",
+  "dependencies": {
+    "flux": "^2.0.1",
+    "keymirror": "~0.1.0",
+    "object-assign": "^1.0.0",
+    "react": "^0.13.2"
+  },
+  "devDependencies": {
+    "browserify": "^6.2.0",
+    "envify": "^3.0.0",
+    "reactify": "^0.15.2",
+    "uglify-js": "~2.4.15",
+    "watchify": "^2.1.1"
+  },
+  "scripts": {
+    "start": "watchify -o js/bundle.js -v -d js/app.js",
+    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > js/bundle.min.js"
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xming13/drupal-codegenerator.git"
+  },
+  "author": "Wei Seng",
+  "license": "MIT",
+  "homepage": "https://github.com/xming13/drupal-codegenerator"
+}
