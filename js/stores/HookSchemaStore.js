@@ -18,8 +18,8 @@ var _ = require('underscore');
 var CHANGE_EVENT = 'change';
 
 var _schemaModel = {
-    tableName: 'initial table name 2',
-    tableDescription: 'initial table description 2',
+    tableName: '',
+    tableDescription: '',
     tableFields: []
 }
 
@@ -33,6 +33,7 @@ function create(fieldType) {
     switch (fieldType) {
         case HookSchemaConstants.FIELD_TYPE_VARCHAR:
             fieldItem = {
+                'fieldName': '',
                 'description': '',
                 'type': 'varchar',
                 'length': 255,
@@ -43,6 +44,7 @@ function create(fieldType) {
 
         case HookSchemaConstants.FIELD_TYPE_INT:
             fieldItem = {
+                'fieldName': '',
                 'description': '',
                 'type': 'int',
                 'unsigned': true,
@@ -53,6 +55,7 @@ function create(fieldType) {
 
         case HookSchemaConstants.FIELD_TYPE_SERIAL:
             fieldItem = {
+                'fieldName': '',
                 'description': '',
                 'type': 'serial',
                 'unsigned': true,
@@ -66,6 +69,10 @@ function create(fieldType) {
     }
 
     fieldItem.id = _.isEmpty(_schemaModel.tableFields) ? 0 : _.max(_.pluck(_schemaModel.tableFields, 'id')) + 1;
+    fieldItem.focusInput = true;
+    _.each(_schemaModel.tableFields, function(tableField) {
+        tableField.focusInput = false;
+    });
     _schemaModel.tableFields.push(fieldItem);
     return fieldItem.id;
 }
@@ -79,7 +86,7 @@ function create(fieldType) {
 function update(id, updates) {
     var tableFieldItem = _.findWhere(_schemaModel.tableFields, {id: id});
     if (tableFieldItem) {
-        tableFieldItem = assign({}, tableFieldItem, updates);
+        _.extend(tableFieldItem, updates);
     }
     else {
         console.log('update failed, fieldItem with id: ' + id + ' does not exist.');

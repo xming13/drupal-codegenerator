@@ -1,15 +1,13 @@
-var keyMirror = require('keymirror');
+module.exports = {
+    UPDATE_SCHEMA: 'UPDATE_SCHEMA',
+    UPDATE_TABLE_NAME: 'UPDATE_TABLE_NAME',
+    UPDATE_TABLE_DESCRIPTION: 'UPDATE_TABLE_DESCRIPTION',
+    UPDATE_TABLE_FIELDS: 'UPDATE_TABLE_FIELDS',
+    CREATE_FIELD: 'CREATE_FIELD',
+    UPDATE_FIELD: 'UPDATE_FIELD',
+    DESTROY_FIELD: 'DESTROY_FIELD',
 
-module.exports = keyMirror({
-    UPDATE_SCHEMA: null,
-    UPDATE_TABLE_NAME: null,
-    UPDATE_TABLE_DESCRIPTION: null,
-    UPDATE_TABLE_FIELDS: null,
-    CREATE_FIELD: null,
-    UPDATE_FIELD: null,
-    DESTROY_FIELD: null,
-
-    FIELD_TYPE_VARCHAR: null,
-    FIELD_TYPE_INT: null,
-    FIELD_TYPE_SERIAL: null
-});
+    FIELD_TYPE_VARCHAR: 'varchar',
+    FIELD_TYPE_INT: 'int',
+    FIELD_TYPE_SERIAL: 'serial'
+};
