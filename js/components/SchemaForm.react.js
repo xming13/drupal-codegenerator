@@ -1,28 +1,28 @@
 var React = require('react');
 var HookSchemaActions = require('../actions/HookSchemaActions');
+var Input = require('react-bootstrap/lib/Input');
+var SchemaField = require('./SchemaField.react');
 
 var SchemaForm = React.createClass({
     getInitialState: function() {
         return this.props.schemaModel;
     },
     handleChangeTableName: function(event) {
-        var schemaModel = this.props.schemaModel;
-        schemaModel.tableName = event.target.value;
-        this.setState(schemaModel);
-        HookSchemaActions.updateSchema(schemaModel);
+        HookSchemaActions.updateTableName(event.target.value);
     },
     handleChangeTableDescription: function(event) {
-        var schemaModel = this.props.schemaModel;
-        schemaModel.tableDescription = event.target.value;
-        this.setState(schemaModel);
-        HookSchemaActions.updateSchema(schemaModel);
+        HookSchemaActions.updateTableDescription(event.target.value);
     },
     render: function() {
         return (
-            <div className='form'>
-            Table Name: <input type='text' value={this.state.tableName} onChange={this.handleChangeTableName} />
-                <br/>
-            Description: <input type='text' value={this.state.tableDescription} onChange={this.handleChangeTableDescription} />
+            <div id='form-hook-entity-info' className='col-sm-7'>
+                <Input type='text' value={this.state.tableName}
+                    label='Table Name'
+                    onChange={this.handleChangeTableName} />
+                <Input type='text' value={this.state.tableDescription}
+                    label='Table Description'
+                    onChange={this.handleChangeTableDescription} />
+                <SchemaField tableFields={this.state.tableFields}/>
             </div>
         );
     }

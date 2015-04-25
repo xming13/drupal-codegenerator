@@ -13,59 +13,85 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var HookSchemaConstants = require('../constants/HookSchemaConstants');
 var assign = require('object-assign');
+var _ = require('underscore');
 
 var CHANGE_EVENT = 'change';
 
-var _todos = {};
 var _schemaModel = {
     tableName: 'initial table name 2',
     tableDescription: 'initial table description 2',
-    tableFields: {}
+    tableFields: []
 }
 
 /**
- * Create a TODO item.
- * @param  {string} text The content of the TODO
+ * Create a tableField item.
+ * @param  {string} fieldName The field name of the tableField item
+ * @param  {string} fieldType The field type of the tableField item
  */
-function create(text) {
-    // Hand waving here -- not showing how this interacts with XHR or persistent
-    // server-side storage.
-    // Using the current timestamp + random number in place of a real id.
-    var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    _todos[id] = {
-        id: id,
-        complete: false,
-        text: text
-    };
+function create(fieldType) {
+    var fieldItem = {};
+    switch (fieldType) {
+        case HookSchemaConstants.FIELD_TYPE_VARCHAR:
+            fieldItem = {
+                'description': '',
+                'type': 'varchar',
+                'length': 255,
+                'not null': true,
+                'default': ''
+            };
+            break;
+
+        case HookSchemaConstants.FIELD_TYPE_INT:
+            fieldItem = {
+                'description': '',
+                'type': 'int',
+                'unsigned': true,
+                'not null': true,
+                'default': 0
+            };
+            break;
+
+        case HookSchemaConstants.FIELD_TYPE_SERIAL:
+            fieldItem = {
+                'description': '',
+                'type': 'serial',
+                'unsigned': true,
+                'not null': true
+            };
+            break;
+
+        default:
+            console.log('Error - unknown field type');
+            return false;
+    }
+
+    fieldItem.id = _.isEmpty(_schemaModel.tableFields) ? 0 : _.max(_.pluck(_schemaModel.tableFields, 'id')) + 1;
+    _schemaModel.tableFields.push(fieldItem);
+    return fieldItem.id;
 }
 
 /**
- * Update a TODO item.
- * @param  {string} id
- * @param {object} updates An object literal containing only the data to be
+ * Update a tableField item.
+ * @param  {string} fieldName
+ * @param  {object} updates An object literal containing only the data to be
  *     updated.
  */
 function update(id, updates) {
-    _todos[id] = assign({}, _todos[id], updates);
+    var tableFieldItem = _.findWhere(_schemaModel.tableFields, {id: id});
+    if (tableFieldItem) {
+        tableFieldItem = assign({}, tableFieldItem, updates);
+    }
+    else {
+        console.log('update failed, fieldItem with id: ' + id + ' does not exist.');
+    }
 }
 
 /**
- * Delete a TODO item.
- * @param  {string} id
+ * Delete a tableField item.
+ * @param  {int} id
  */
 function destroy(id) {
-    delete _todos[id];
-}
-
-/**
- * Delete all the completed TODO items.
- */
-function destroyCompleted() {
-    for (var id in _todos) {
-        if (_todos[id].complete) {
-            destroy(id);
-        }
-    }
+    _schemaModel.tableFields = _.without(_schemaModel.tableFields, _.findWhere(_schemaModel.tableFields, {id: id}));
 }
 
 /**
@@ -82,6 +108,14 @@ function updateTableName(tableName) {
  */
 function updateTableDescription(tableDescription) {
     _schemaModel.tableDescription = tableDescription;
+}
+
+/**
+ * Update table fields.
+ * @param  {string} tableFields
+ */
+function updateTableFields(tableFields) {
+    _schemaModel.tableFields = tableFields;
 }
 
 /**
@@ -119,32 +153,19 @@ var HookSchemaStore = assign({}, EventEmitter.prototype, {
 
 // Register callback to handle all updates
 AppDispatcher.register(function(action) {
-    var text;
-
     switch(action.actionType) {
         case HookSchemaConstants.CREATE_FIELD:
-            text = action.text.trim();
-            if (text !== '') {
-                create(text);
-                HookSchemaStore.emitChange();
-            }
+            create(action.fieldType);
+            HookSchemaStore.emitChange();
             break;
 
         case HookSchemaConstants.UPDATE_FIELD:
-            text = action.text.trim();
-            if (text !== '') {
-                update(action.id, {text: text});
-                HookSchemaStore.emitChange();
-            }
+            update(action.id, action.tableFieldItem);
+            HookSchemaStore.emitChange();
             break;
 
         case HookSchemaConstants.DESTROY_FIELD:
             destroy(action.id);
-            HookSchemaStore.emitChange();
-            break;
-
-        case HookSchemaConstants.DESTROY_FIELD_COMPLETED:
-            destroyCompleted();
             HookSchemaStore.emitChange();
             break;
 
@@ -155,6 +176,11 @@ AppDispatcher.register(function(action) {
 
         case HookSchemaConstants.UPDATE_TABLE_DESCRIPTION:
             updateTableDescription(action.tableDescription.trim());
+            HookSchemaStore.emitChange();
+            break;
+
+        case HookSchemaConstants.UPDATE_TABLE_FIELDS:
+            updateTableFields(action.tableFields);
             HookSchemaStore.emitChange();
             break;
 

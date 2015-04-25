@@ -4,50 +4,40 @@ var HookSchemaConstants = require('../constants/HookSchemaConstants');
 var HookSchemaActions = {
 
     /**
-     * @param  {string} fieldName
      * @param  {string} fieldType
      */
-    create: function(fieldName, fieldType) {
+    create: function(fieldType) {
         AppDispatcher.dispatch({
             actionType: HookSchemaConstants.CREATE_FIELD,
-            fieldName: fieldName,
             fieldType: fieldType
         });
     },
 
     /**
-     * @param  {string} id The ID of the Field item
-     * @param  {string} fieldName
-     * @param  {string} fieldType
+     * @param  {int} id
+     * @param  {object} tableFieldItem
      */
-    update: function(id, fieldName, fieldType) {
+    update: function(id, tableFieldItem) {
         AppDispatcher.dispatch({
             actionType: HookSchemaConstants.UPDATE_FIELD,
             id: id,
-            fieldName: fieldName,
-            fieldType: fieldType
+            tableFieldItem: tableFieldItem
         });
     },
 
     /**
-     * @param  {string} id
+     * @param  {int} id
      */
     destroy: function(id) {
         AppDispatcher.dispatch({
-            actionType: HookSchemaConstants.DELETE_FIELD,
+            actionType: HookSchemaConstants.DESTROY_FIELD,
             id: id
         });
     },
 
     /**
-     * Delete all the completed ToDos
+     * @param  {string} tableName
      */
-    destroyCompleted: function() {
-        AppDispatcher.dispatch({
-            actionType: HookSchemaConstants.DELETE_FIELD_COMPLETED
-        });
-    },
-
     updateTableName: function(tableName) {
         AppDispatcher.dispatch({
             actionType: HookSchemaConstants.UPDATE_TABLE_NAME,
@@ -55,6 +45,29 @@ var HookSchemaActions = {
         });
     },
 
+    /**
+     * @param  {string} tableDescription
+     */
+    updateTableDescription: function(tableDescription) {
+        AppDispatcher.dispatch({
+            actionType: HookSchemaConstants.UPDATE_TABLE_DESCRIPTION,
+            tableDescription: tableDescription
+        });
+    },
+
+    /**
+     *  {object} @param tableFields
+     */
+    updateTableFields: function(tableFields) {
+        AppDispatcher.dispatch({
+            actionType: HookSchemaConstants.UPDATE_TABLE_FIELDS,
+            tableFields: tableFields
+        });
+    },
+
+    /**
+     * @param  {object} schema
+     */
     updateSchema: function(schema) {
         AppDispatcher.dispatch({
             actionType: HookSchemaConstants.UPDATE_SCHEMA,

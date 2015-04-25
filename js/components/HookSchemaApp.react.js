@@ -5,7 +5,9 @@
 
 var React = require('react');
 var HookSchemaStore = require('../stores/HookSchemaStore');
+var hljs = require('highlight.js');
 
+var Header = require('./Header.react');
 var SchemaForm = require('./SchemaForm.react');
 var SchemaPreview = require('./SchemaPreview.react');
 
@@ -22,17 +24,25 @@ var HookSchemaApp = React.createClass({
 
     componentDidMount: function() {
         HookSchemaStore.addChangeListener(this._onChange);
+        hljs.highlightBlock(document.querySelector('pre code'));
     },
 
     componentWillUnmount: function() {
         HookSchemaStore.removeChangeListener(this._onChange);
     },
 
+    componentDidUpdate: function() {
+        hljs.highlightBlock(document.querySelector('pre code'));
+    },
+
     render: function() {
         return (
-            <div className='schema'>
-                <SchemaForm schemaModel={this.state.schemaModel} />
-                <SchemaPreview schemaModel={this.state.schemaModel} />
+            <div>
+                <Header/>
+                <section className='hook-entity-info'>
+                    <SchemaForm schemaModel={this.state.schemaModel} />
+                    <SchemaPreview schemaModel={this.state.schemaModel} />
+                </section>
             </div>
         );
     },
