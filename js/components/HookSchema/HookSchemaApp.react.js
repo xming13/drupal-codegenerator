@@ -9,9 +9,6 @@ var Header = require('./../Header.react.js');
 var SchemaForm = require('./SchemaForm.react.js');
 var SchemaPreview = require('./SchemaPreview.react.js');
 
-var _ = require('underscore');
-var hljs = require('highlight.js');
-
 function getSchemaModelState() {
     return {
         schemaModel: HookSchemaStore.getSchemaModel()
@@ -25,21 +22,10 @@ var HookSchemaApp = React.createClass({
 
     componentDidMount: function() {
         HookSchemaStore.addChangeListener(this._onChange);
-        var codeBlock = document.querySelector('pre code');
-        if (codeBlock) {
-            hljs.highlightBlock(codeBlock);
-        }
     },
 
     componentWillUnmount: function() {
         HookSchemaStore.removeChangeListener(this._onChange);
-    },
-
-    componentDidUpdate: function() {
-        var codeBlock = document.querySelector('pre code');
-        if (codeBlock) {
-            hljs.highlightBlock(codeBlock);
-        }
     },
 
     render: function() {

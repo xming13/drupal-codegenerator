@@ -1,15 +1,32 @@
 var React = require('react');
 var SchemaPreviewField = require('./SchemaPreviewField.react.js');
+
 var _ = require('underscore');
 var ReactZeroClipboard = require('react-zeroclipboard');
+var hljs = require('highlight.js');
+
 var mui = require('material-ui');
 var IconButton = mui.IconButton;
 var Snackbar = mui.Snackbar;
 
 var SchemaPreview = React.createClass({
+    componentDidMount: function() {
+        var codeBlock = this.refs.code.getDOMNode();
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    },
+
+    componentDidUpdate: function() {
+        var codeBlock = this.refs.code.getDOMNode();
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    },
+
     getCopiedText: function() {
-        var code = document.querySelector('.hook-schema-code code');
-        return code.textContent;
+        var code = this.refs.code.getDOMNode();
+        return code ? code.textContent : '';
     },
 
     clickCopy: function() {
