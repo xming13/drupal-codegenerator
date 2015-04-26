@@ -12,6 +12,10 @@ var Header = React.createClass({
         this.refs.shortcut.show();
     },
 
+    clickInfo: function() {
+        this.refs.info.show();
+    },
+
     render: function() {
         var mainMenuItems = [
             { payload: '1', text: 'Hook Schema' },
@@ -29,7 +33,8 @@ var Header = React.createClass({
                         <DropDownMenu menuItems={mainMenuItems} />
                     </ToolbarGroup>
                     <ToolbarGroup key={1} float='right'>
-                        <IconButton iconClassName="mdi mdi-help" tooltip="Shortcut" onClick={this.clickShortcut} />
+                        <IconButton iconClassName='mdi mdi-help' tooltip='Shortcut' onClick={this.clickShortcut} />
+                        <IconButton iconClassName='mdi mdi-information' tooltip='Info' onClick={this.clickInfo} />
                     </ToolbarGroup>
                 </Toolbar>
                 <Dialog
@@ -45,6 +50,13 @@ var Header = React.createClass({
                     Ctrl + Alt + S: Add a new serial field
                     <br/><br/>
                     Ctrl + Alt + D: Delete the last added field
+                </Dialog>
+                <Dialog
+                    ref='info'
+                    title='Drupal code generator'
+                    actions={standardActions}
+                    model={true}>
+                    {'Made with ReactJS and Material UI '}<i className="mdi mdi-heart"></i>
                 </Dialog>
             </div>
         );

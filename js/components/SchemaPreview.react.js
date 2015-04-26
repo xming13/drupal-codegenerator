@@ -16,10 +16,6 @@ var SchemaPreview = React.createClass({
         this.refs.snackbar.show();
     },
 
-    _handleAction: function(e) {
-        console.log('_handleAction', e);
-    },
-
     render: function() {
         var schemaPreviewFields = this.props.schemaModel.tableFields.map(function(tableField, index) {
             return (<SchemaPreviewField tableField={tableField} key={index}/>);
