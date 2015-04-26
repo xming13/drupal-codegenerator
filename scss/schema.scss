@@ -6,16 +6,28 @@
   background-color: $light-blue-500;
 }
 
+.btn-field-varchar .mui-raised-button-container {
+  background-color: $deep-orange-200;
+}
+
+.btn-field-int .mui-raised-button-container {
+  background-color: $orange-200;
+}
+
+.btn-field-serial .mui-raised-button-container {
+  background-color: $yellow-200;
+}
+
 .paper-table-field {
   margin: 10px 0;
 }
 
 .paper-table-field-varchar {
-  background-color: $red-100;
+  background-color: $deep-orange-100;
 }
 
 .paper-table-field-int {
-  background-color: $deep-orange-100;
+  background-color: $orange-100;
 }
 
 .paper-table-field-serial {
@@ -30,14 +42,19 @@
   width: 128px;
 }
 
-.hook-schema-container {
+#content {
+  height: 100%;
   background-color: $light-blue-100;
   overflow: auto;
 }
 
+.hook-schema-container {
+  padding: 20px;
+}
+
 .hook-schema-code {
   position: fixed;
-  right: 0;
+  right: 18px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -46,5 +63,5 @@
   max-height: 90%;
   width: 41.66666667%;
   background: $light-blue-200;
-  border: 2px solid $blue-200;
+  border: 3px solid $blue-400;
 }

@@ -1973,14 +1973,23 @@ body {
 .main-toolbar {
   background-color: #03a9f4; }
 
+.btn-field-varchar .mui-raised-button-container {
+  background-color: #ffab91; }
+
+.btn-field-int .mui-raised-button-container {
+  background-color: #ffcc80; }
+
+.btn-field-serial .mui-raised-button-container {
+  background-color: #fff59d; }
+
 .paper-table-field {
   margin: 10px 0; }
 
 .paper-table-field-varchar {
-  background-color: #ffcdd2; }
+  background-color: #ffccbc; }
 
 .paper-table-field-int {
-  background-color: #ffccbc; }
+  background-color: #ffe0b2; }
 
 .paper-table-field-serial {
   background-color: #fff9c4; }
@@ -1991,13 +2000,17 @@ body {
 .input-small {
   width: 128px; }
 
-.hook-schema-container {
+#content {
+  height: 100%;
   background-color: #b3e5fc;
   overflow: auto; }
 
+.hook-schema-container {
+  padding: 20px; }
+
 .hook-schema-code {
   position: fixed;
-  right: 0;
+  right: 18px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
@@ -2006,6 +2019,6 @@ body {
   max-height: 90%;
   width: 41.66666667%;
   background: #81d4fa;
-  border: 2px solid #90caf9; }
+  border: 3px solid #42a5f5; }
 
 /*# sourceMappingURL=schema.css.map */

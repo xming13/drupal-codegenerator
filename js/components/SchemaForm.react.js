@@ -3,7 +3,7 @@ var HookSchemaActions = require('../actions/HookSchemaActions');
 var mui = require('material-ui');
 var TextField = mui.TextField;
 var Input = require('react-bootstrap/lib/Input');
-var SchemaFormFields = require('./SchemaFormFields.react');
+var SchemaFormFieldList = require('./SchemaFormFieldList.react');
 var _ = require('underscore');
 
 var ERROR_TEXT_REQUIRED = 'This field is required.';
@@ -45,7 +45,7 @@ var SchemaForm = React.createClass({
 
                 <br/>
 
-                <SchemaFormFields tableFields={this.state.tableFields}/>
+                <SchemaFormFieldList tableFields={this.state.tableFields}/>
             </div>
         );
     }

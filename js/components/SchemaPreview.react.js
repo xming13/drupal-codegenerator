@@ -7,21 +7,19 @@ var SchemaPreview = React.createClass({
             return (<SchemaPreviewField tableField={tableField} key={index}/>);
         });
         return (
-            <div className="fixed-wrapper col-sm-5">
-                <div className='hook-schema-code'>
-                    <pre>
-                        <code className='php'>
-                            {'function hook_schema() {\n'}
-                            {'  $schema[\''}{this.props.schemaModel.tableName}{'\'] = array(\n'}
-                            {'    \'description\' => \''}{this.props.schemaModel.tableDescription}{'\',\n'}
-                            {'    \'fields\' => array(\n'}
-                            {schemaPreviewFields}
-                            {'    ),\n'}
-                            {'  ),\n'}
-                            }
-                        </code>
-                    </pre>
-                </div>
+            <div className='hook-schema-code'>
+                <pre>
+                    <code className='php'>
+                        {'function hook_schema() {\n'}
+                        {'  $schema[\''}{this.props.schemaModel.tableName}{'\'] = array(\n'}
+                        {'    \'description\' => \''}{this.props.schemaModel.tableDescription}{'\',\n'}
+                        {'    \'fields\' => array(\n'}
+                        {schemaPreviewFields}
+                        {'    ),\n'}
+                        {'  ),\n'}
+                        }
+                    </code>
+                </pre>
             </div>
         );
     }

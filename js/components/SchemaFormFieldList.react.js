@@ -14,7 +14,7 @@ var TextField = mui.TextField;
 var Paper = mui.Paper;
 var FontIcon = mui.FontIcon;
 
-var SchemaFormFields = React.createClass({
+var SchemaFormFieldList = React.createClass({
     getInitialState: function() {
         return {
             tableFields: this.props.tableFields
@@ -67,9 +67,9 @@ var SchemaFormFields = React.createClass({
 
         return (
             <div>
-                <RaisedButton label='+ varchar' secondary={true} onClick={this.clickAddVarcharField}/>
-                <RaisedButton label='+ int' secondary={true} onClick={this.clickAddIntField}/>
-                <RaisedButton label='+ serial' secondary={true} onClick={this.clickAddSerialField}/>
+                <RaisedButton label='+ varchar' className='btn-field-varchar' onClick={this.clickAddVarcharField}/>
+                <RaisedButton label='+ int' className='btn-field-int' onClick={this.clickAddIntField}/>
+                <RaisedButton label='+ serial' className='btn-field-serial' onClick={this.clickAddSerialField}/>
 
                 <br/>
 
@@ -79,4 +79,4 @@ var SchemaFormFields = React.createClass({
     }
 });
 
-module.exports = SchemaFormFields;
+module.exports = SchemaFormFieldList;
