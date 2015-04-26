@@ -6,6 +6,12 @@
   background-color: $light-blue-500;
 }
 
+.mui-toolbar .mui-toolbar-group .mui-font-icon.mdi {
+  // reset to fix the position
+  line-height: normal;
+  padding-left: 0;
+}
+
 .btn-field-varchar .mui-raised-button-container {
   background-color: $deep-orange-200;
 }

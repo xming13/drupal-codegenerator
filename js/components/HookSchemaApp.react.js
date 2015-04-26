@@ -52,7 +52,7 @@ var HookSchemaApp = React.createClass({
     },
 
     /**
-     * Event handler for 'change' events coming from the TodoStore
+     * Event handler for 'change' events coming from the HookSchemaStore
      */
     _onChange: function() {
         this.setState(getSchemaModelState());

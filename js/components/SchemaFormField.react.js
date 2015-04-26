@@ -17,7 +17,7 @@ var SchemaFormField = React.createClass({
 
     componentDidMount: function() {
         if (this.props.tableField.focusInput) {
-           this.refs.textfield.focus();
+            this.refs.textfield.focus();
         }
         else {
             this.refs.textfield.clear();
@@ -39,7 +39,7 @@ var SchemaFormField = React.createClass({
             <div className='col-sm-4'>
                 <Paper className={'paper-table-field paper-table-field-' + tableField.type} zDepth={2} innerClassName='paper-inner-container'>
                     <label>{tableField.type}</label>
-                    <IconButton className='delete glyphicon' iconClassName="glyphicon-remove" tooltip="Remove" onClick={this.clickDelete} />
+                    <IconButton className='delete' iconClassName="mdi mdi-close" tooltip="Remove" onClick={this.clickDelete} />
                     <br/>
                     <TextField floatingLabelText='Field Name' defaultValue={tableField.fieldName}
                         onChange={this.handleChangeUpdate} ref='textfield'
