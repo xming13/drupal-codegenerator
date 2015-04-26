@@ -25,7 +25,6 @@ var HookSchemaApp = React.createClass({
     componentDidMount: function() {
         HookSchemaStore.addChangeListener(this._onChange);
         hljs.highlightBlock(document.querySelector('pre code'));
-        document.getElementById('text-table-name').focus();
     },
 
     componentWillUnmount: function() {
@@ -34,7 +33,7 @@ var HookSchemaApp = React.createClass({
 
     componentDidUpdate: function() {
         hljs.highlightBlock(document.querySelector('pre code'));
-        var focusInput = document.querySelector('.focus-input');
+        var focusInput = document.querySelector('.focus-input input');
         if (focusInput) {
             focusInput.focus();
         }
@@ -44,7 +43,7 @@ var HookSchemaApp = React.createClass({
         return (
             <div>
                 <Header/>
-                <section className='hook-entity-info'>
+                <section className='hook-schema-container'>
                     <SchemaForm schemaModel={this.state.schemaModel} />
                     <SchemaPreview schemaModel={this.state.schemaModel} />
                 </section>

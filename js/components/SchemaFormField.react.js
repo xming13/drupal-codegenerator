@@ -1,70 +1,35 @@
 var React = require('react');
 var HookSchemaActions = require('../actions/HookSchemaActions');
-var HookSchemaConstants = require('../constants/HookSchemaConstants');
-var KeyboardJS = require('keyboardjs');
-var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
-var Button = require('react-bootstrap/lib/Button');
-var Input = require('react-bootstrap/lib/Input');
+var mui = require('material-ui');
+var TextField = mui.TextField;
+
+var ERROR_TEXT_REQUIRED = 'This field is required.';
 
 var SchemaFormField = React.createClass({
     getInitialState: function() {
         return {
-            tableFields: this.props.tableFields
+            errorText: ERROR_TEXT_REQUIRED
         };
     },
-
     componentDidMount: function() {
-        var self = this;
-        KeyboardJS.on('ctrl + alt + i', function() {
-            self.clickAddIntField();
-        });
-        KeyboardJS.on('ctrl + alt + s', function() {
-            self.clickAddSerialField();
-        });
-        KeyboardJS.on('ctrl + alt + v', function() {
-            self.clickAddVarcharField();
-        });
+        if (this.props.tableField.focusInput) {
+           this.refs.textfield.focus();
+        }
+        else {
+            this.refs.textfield.clear();
+        }
     },
-
-    componentWillUnmount: function() {
-        KeyboardJS.clear('ctrl + alt + i');
-        KeyboardJS.clear('ctrl + alt + s');
-        KeyboardJS.clear('ctrl + alt + v');
+    handleChangeUpdate: function(event) {
+        this.state.errorText = event.target.value == '' ? ERROR_TEXT_REQUIRED : '';
+        HookSchemaActions.update(this.props.tableField.id, {fieldName: event.target.value});
     },
-
-    clickAddVarcharField: function() {
-        HookSchemaActions.create(HookSchemaConstants.FIELD_TYPE_VARCHAR);
-    },
-    clickAddIntField: function() {
-        HookSchemaActions.create(HookSchemaConstants.FIELD_TYPE_INT);
-    },
-    clickAddSerialField: function() {
-        HookSchemaActions.create(HookSchemaConstants.FIELD_TYPE_SERIAL);
-    },
-
     render: function() {
-        var handleChangeUpdateField = function(id, event) {
-            HookSchemaActions.update(id, {fieldName: event.target.value});
-        };
-
-        var renderedTableFields = this.props.tableFields.map(function(tableField, index) {
-            var handleChangeUpdate = handleChangeUpdateField.bind(this, tableField.id);
-            return (
-                <div className='col-sm-3' key={index}>
-                    <Input type='text' label='Name' key={index} value={tableField.fieldName} onChange={handleChangeUpdate} className={tableField.focusInput ? 'focus-input' : ''} />
-                </div>
-            );
-        });
-
+        var tableField = this.props.tableField;
         return (
-            <div>
-                <ButtonToolbar>
-                    <Button bsSize='small' bsStyle='primary' onClick={this.clickAddVarcharField}>Add Varchar Field</Button>
-                        <Button bsSize='small' bsStyle='primary' onClick={this.clickAddIntField}>Add Int Field</Button>
-                        <Button bsSize='small' bsStyle='primary' onClick={this.clickAddSerialField}>Add Serial Field</Button>
-                    </ButtonToolbar>
-                    {renderedTableFields}
-            </div>
+            <TextField floatingLabelText='Field Name' defaultValue={tableField.fieldName}
+                onChange={this.handleChangeUpdate} ref='textfield'
+                errorText={this.state.errorText}
+                className={'input-small'}/>
         );
     }
 });

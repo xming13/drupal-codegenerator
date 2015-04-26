@@ -1,0 +1,50 @@
+@import "../node_modules/material-ui-sass/material-ui";
+//@import "../node_modules/material-ui-sass/material-ui/_main";
+//@import "../node_modules/material-ui-sass/material-ui/_html";
+
+.main-toolbar {
+  background-color: $light-blue-500;
+}
+
+.paper-table-field {
+  margin: 10px 0;
+}
+
+.paper-table-field-varchar {
+  background-color: $red-100;
+}
+
+.paper-table-field-int {
+  background-color: $deep-orange-100;
+}
+
+.paper-table-field-serial {
+  background-color: $yellow-100;
+}
+
+.paper-inner-container {
+  padding: 10px 10px 20px;
+}
+
+.input-small {
+  width: 128px;
+}
+
+.hook-schema-container {
+  background-color: $light-blue-100;
+  overflow: auto;
+}
+
+.hook-schema-code {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  overflow: auto;
+  max-height: 90%;
+  width: 41.66666667%;
+  background: $light-blue-200;
+  border: 2px solid $blue-200;
+}

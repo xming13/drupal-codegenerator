@@ -1,28 +1,51 @@
 var React = require('react');
 var HookSchemaActions = require('../actions/HookSchemaActions');
+var mui = require('material-ui');
+var TextField = mui.TextField;
 var Input = require('react-bootstrap/lib/Input');
-var SchemaFormField = require('./SchemaFormField.react');
+var SchemaFormFields = require('./SchemaFormFields.react');
+var _ = require('underscore');
+
+var ERROR_TEXT_REQUIRED = 'This field is required.';
 
 var SchemaForm = React.createClass({
     getInitialState: function() {
-        return this.props.schemaModel;
+        return _.extend(this.props.schemaModel, {errorText: ERROR_TEXT_REQUIRED});
     },
+
+    componentDidMount: function() {
+        this.refs.textfieldName.focus();
+    },
+
     handleChangeTableName: function(event) {
+        this.state.errorText = event.target.value == '' ? ERROR_TEXT_REQUIRED : '';
         HookSchemaActions.updateTableName(event.target.value);
     },
+
     handleChangeTableDescription: function(event) {
         HookSchemaActions.updateTableDescription(event.target.value);
     },
+
     render: function() {
         return (
-            <div id='form-hook-entity-info' className='col-sm-7'>
-                <Input id='text-table-name' type='text' value={this.state.tableName}
-                    label='Table Name' placeholder='Your table name'
+            <div className='form-hook-schema col-sm-7'>
+                <TextField
+                    defaultValue={this.state.tableName}
+                    errorText={this.state.errorText}
+                    floatingLabelText='Table Name'
+                    ref='textfieldName'
                     onChange={this.handleChangeTableName} />
-                <Input type='text' value={this.state.tableDescription}
-                    label='Table Description' placeholder='Description'
+
+                <br/>
+
+                <TextField
+                    defaultValue={this.state.tableDescription}
+                    floatingLabelText='Description'
                     onChange={this.handleChangeTableDescription} />
-                <SchemaFormField tableFields={this.state.tableFields}/>
+
+                <br/>
+
+                <SchemaFormFields tableFields={this.state.tableFields}/>
             </div>
         );
     }

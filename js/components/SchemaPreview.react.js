@@ -8,7 +8,7 @@ var SchemaPreview = React.createClass({
         });
         return (
             <div className="fixed-wrapper col-sm-5">
-                <div id="code-hook-entity-info" className='preview'>
+                <div className='hook-schema-code'>
                     <pre>
                         <code className='php'>
                             {'function hook_schema() {\n'}
