@@ -8,8 +8,8 @@
   overflow: auto;
 }
 
-.hook-entity-info-container,
-.hook-schema-container {
+.hook-schema-container,
+.hook-entity-info-container {
   padding: 20px;
   padding-top: 56px;
 }
@@ -83,7 +83,8 @@
   width: 128px;
 }
 
-.hook-schema-code {
+.hook-schema-code,
+.hook-entity-info-code {
   position: fixed;
   right: 15px;
   top: 50%;

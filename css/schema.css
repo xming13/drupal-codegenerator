@@ -1975,8 +1975,8 @@ body {
   background-color: #b3e5fc;
   overflow: auto; }
 
-.hook-entity-info-container,
-.hook-schema-container {
+.hook-schema-container,
+.hook-entity-info-container {
   padding: 20px;
   padding-top: 56px; }
 
@@ -2030,7 +2030,8 @@ body {
 .input-small {
   width: 128px; }
 
-.hook-schema-code {
+.hook-schema-code,
+.hook-entity-info-code {
   position: fixed;
   right: 15px;
   top: 50%;
@@ -2041,12 +2042,15 @@ body {
   max-height: calc(100% - 56px);
   margin-top: 28px;
   overflow: auto; }
-  .hook-schema-code pre {
+  .hook-schema-code pre,
+  .hook-entity-info-code pre {
     border: 4px solid #1565c0; }
-  .hook-schema-code .copy {
+  .hook-schema-code .copy,
+  .hook-entity-info-code .copy {
     position: absolute;
     right: 4px; }
-  .hook-schema-code .copied.mui-is-open {
+  .hook-schema-code .copied.mui-is-open,
+  .hook-entity-info-code .copied.mui-is-open {
     min-width: 100px;
     left: auto;
     right: 12px;
