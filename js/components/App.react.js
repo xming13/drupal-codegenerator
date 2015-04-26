@@ -1,7 +1,7 @@
 var React = require('react');
 var Header = require('./Header.react');
-var HookEntityInfoApp = require('./HookEntityInfoApp.react');
-var HookSchemaApp = require('./HookSchemaApp.react');
+var HookEntityInfoApp = require('./HookEntityInfo/HookEntityInfoApp.react');
+var HookSchemaApp = require('./HookSchema/HookSchemaApp.react');
 
 var App = React.createClass({
     getInitialState: function() {

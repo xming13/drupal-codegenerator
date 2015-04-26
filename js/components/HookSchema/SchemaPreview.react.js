@@ -1,5 +1,5 @@
 var React = require('react');
-var SchemaPreviewField = require('./SchemaPreviewField.react');
+var SchemaPreviewField = require('./SchemaPreviewField.react.js');
 var _ = require('underscore');
 var ReactZeroClipboard = require('react-zeroclipboard');
 var mui = require('material-ui');

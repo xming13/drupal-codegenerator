@@ -1,5 +1,5 @@
 var React = require('react');
-var HookSchemaActions = require('../actions/HookSchemaActions');
+var HookSchemaActions = require('../../actions/HookSchemaActions');
 
 var mui = require('material-ui');
 var TextField = mui.TextField;

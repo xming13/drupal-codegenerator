@@ -1,6 +1,6 @@
 var React = require('react');
-var HookSchemaActions = require('../actions/HookSchemaActions');
-var SchemaFormFieldList = require('./SchemaFormFieldList.react');
+var HookSchemaActions = require('../../actions/HookSchemaActions');
+var SchemaFormFieldList = require('./SchemaFormFieldList.react.js');
 
 var _ = require('underscore');
 

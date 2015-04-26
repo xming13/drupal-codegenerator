@@ -1,6 +1,6 @@
 var React = require('react');
-var HookSchemaActions = require('../actions/HookSchemaActions');
-var HookSchemaConstants = require('../constants/HookSchemaConstants');
+var HookSchemaActions = require('../../actions/HookSchemaActions');
+var HookSchemaConstants = require('../../constants/HookSchemaConstants');
 var SchemaFormField = require('./SchemaFormField.react');
 
 var KeyboardJS = require('keyboardjs');

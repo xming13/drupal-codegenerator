@@ -4,10 +4,10 @@
  */
 
 var React = require('react');
-var HookSchemaStore = require('../stores/HookSchemaStore');
-var Header = require('./Header.react');
-var SchemaForm = require('./SchemaForm.react');
-var SchemaPreview = require('./SchemaPreview.react');
+var HookSchemaStore = require('../../stores/HookSchemaStore');
+var Header = require('./../Header.react.js');
+var SchemaForm = require('./SchemaForm.react.js');
+var SchemaPreview = require('./SchemaPreview.react.js');
 
 var _ = require('underscore');
 var hljs = require('highlight.js');

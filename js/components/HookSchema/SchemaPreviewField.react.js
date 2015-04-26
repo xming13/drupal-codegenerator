@@ -1,5 +1,5 @@
 var React = require('react');
-var HookSchemaConstants = require('../constants/HookSchemaConstants');
+var HookSchemaConstants = require('../../constants/HookSchemaConstants');
 
 var SchemaPreviewField = React.createClass({
     render: function() {
