@@ -16,7 +16,7 @@ var SchemaPreviewField = React.createClass({
                         {s8}'length' => {this.props.tableField.length},{'\n'}
                         {s8}'not null' => {this.props.tableField['not null'] ? 'TRUE' : 'FALSE'},{'\n'}
                         {s8}'default' => '{this.props.tableField.default}',{'\n'}
-                        {s6}},{'\n'}
+                        {s6}),{'\n'}
                     </span>
                 );
 
@@ -29,7 +29,7 @@ var SchemaPreviewField = React.createClass({
                         {s8}'unsigned' => {this.props.tableField.unsigned ? 'TRUE' : 'FALSE'},{'\n'}
                         {s8}'not null' => {this.props.tableField['not null'] ? 'TRUE' : 'FALSE'},{'\n'}
                         {s8}'default' => {this.props.tableField.default},{'\n'}
-                        {s6}},{'\n'}
+                        {s6}),{'\n'}
                     </span>
                 );
 
@@ -41,7 +41,7 @@ var SchemaPreviewField = React.createClass({
                         {s8}'type' => '{this.props.tableField.type}',{'\n'}
                         {s8}'unsigned' => {this.props.tableField.unsigned ? 'TRUE' : 'FALSE'},{'\n'}
                         {s8}'not null' => {this.props.tableField['not null'] ? 'TRUE' : 'FALSE'},{'\n'}
-                        {s6}},{'\n'}
+                        {s6}),{'\n'}
                     </span>
                 );
 
