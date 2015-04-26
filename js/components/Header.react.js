@@ -25,6 +25,10 @@ var Header = React.createClass({
         KeyboardJS.clear('esc');
     },
 
+    handleMenuChange: function(e, selectedIndex, menuItem) {
+        this.props.showApp(selectedIndex);
+    },
+
     clickShortcut: function() {
         this.refs.shortcut.show();
     },
@@ -47,7 +51,7 @@ var Header = React.createClass({
             <div>
                 <Toolbar className='main-toolbar'>
                     <ToolbarGroup key={0} float='left'>
-                        <DropDownMenu menuItems={mainMenuItems} />
+                        <DropDownMenu menuItems={mainMenuItems} onChange={this.handleMenuChange} />
                     </ToolbarGroup>
                     <ToolbarGroup key={1} float='right'>
                         <IconButton iconClassName='mdi mdi-help' tooltip='Shortcut' onClick={this.clickShortcut} />
@@ -60,15 +64,25 @@ var Header = React.createClass({
                     actions={standardActions}
                     modal={true}
                     openImmediately={false}>
-                    Ctrl + Alt + V: Add a new varchar field
+                    <label>Ctrl + Alt + V</label>
+                    <br/>
+                    Add a new varchar field
                     <br/><br/>
-                    Ctrl + Alt + I: Add a new int field
+                    <label>Ctrl + Alt + I</label>
+                    <br/>
+                    Add a new int field
                     <br/><br/>
-                    Ctrl + Alt + S: Add a new serial field
+                    <label>Ctrl + Alt + S</label>
+                    <br/>
+                    Add a new serial field
                     <br/><br/>
-                    Ctrl + Alt + D: Delete the last added field
+                    <label>Ctrl + Alt + D</label>
+                    <br/>
+                    Delete the last added field
                     <br/><br/>
-                    Ctrl + ? or Ctrl + /: Open this shortcut key dialog
+                    <label>{'Ctrl + ? or Ctrl + /'}</label>
+                    <br/>
+                    Open this shortcut key dialog
                 </Dialog>
                 <Dialog
                     ref='info'

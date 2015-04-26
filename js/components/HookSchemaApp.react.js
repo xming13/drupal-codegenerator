@@ -9,6 +9,7 @@ var Header = require('./Header.react');
 var SchemaForm = require('./SchemaForm.react');
 var SchemaPreview = require('./SchemaPreview.react');
 
+var _ = require('underscore');
 var hljs = require('highlight.js');
 
 function getSchemaModelState() {
@@ -24,7 +25,10 @@ var HookSchemaApp = React.createClass({
 
     componentDidMount: function() {
         HookSchemaStore.addChangeListener(this._onChange);
-        hljs.highlightBlock(document.querySelector('pre code'));
+        var codeBlock = document.querySelector('pre code');
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
     },
 
     componentWillUnmount: function() {
@@ -32,22 +36,18 @@ var HookSchemaApp = React.createClass({
     },
 
     componentDidUpdate: function() {
-        hljs.highlightBlock(document.querySelector('pre code'));
-        var focusInput = document.querySelector('.focus-input input');
-        if (focusInput) {
-            focusInput.focus();
+        var codeBlock = document.querySelector('pre code');
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
         }
     },
 
     render: function() {
         return (
-            <div>
-                <Header/>
-                <section className='hook-schema-container'>
-                    <SchemaForm schemaModel={this.state.schemaModel} />
-                    <SchemaPreview schemaModel={this.state.schemaModel} />
-                </section>
-            </div>
+            <section className='hook-schema-container'>
+                <SchemaForm schemaModel={this.state.schemaModel} />
+                <SchemaPreview schemaModel={this.state.schemaModel} />
+            </section>
         );
     },
 

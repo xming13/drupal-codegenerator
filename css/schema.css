@@ -1975,6 +1975,7 @@ body {
   background-color: #b3e5fc;
   overflow: auto; }
 
+.hook-entity-info-container,
 .hook-schema-container {
   padding: 20px;
   padding-top: 56px; }

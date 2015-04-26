@@ -20,7 +20,7 @@ var SchemaForm = React.createClass({
     },
 
     handleChangeTableName: function(event) {
-        this.state.errorText = event.target.value == '' ? ERROR_TEXT_REQUIRED : '';
+        this.setState({errorText: event.target.value == '' ? ERROR_TEXT_REQUIRED : ''});
         HookSchemaActions.updateTableName(event.target.value);
     },
 

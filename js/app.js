@@ -1,8 +1,8 @@
 var React = require('react');
 
-var HookSchemaApp = require('./components/HookSchemaApp.react');
+var App = require('./components/App.react');
 
 React.render(
-    <HookSchemaApp />,
+    <App />,
     document.getElementById('content')
 );
