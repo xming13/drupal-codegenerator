@@ -1,14 +1,3 @@
-/*
- * Copyright (c) 2014, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * TodoStore
- */
-
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var HookSchemaConstants = require('../constants/HookSchemaConstants');
@@ -21,7 +10,7 @@ var _schemaModel = {
     tableName: '',
     tableDescription: '',
     tableFields: []
-}
+};
 
 /**
  * Create a tableField item.
@@ -197,7 +186,7 @@ AppDispatcher.register(function(action) {
             break;
 
         default:
-        // no op
+            break;
     }
 });
 

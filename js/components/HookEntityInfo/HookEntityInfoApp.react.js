@@ -1,16 +1,25 @@
 var React = require('react');
+var HookEntityInfoStore = require('../../stores/HookEntityInfoStore');
 var EntityInfoForm = require('./EntityInfoForm.react');
 var EntityInfoPreview = require('./EntityInfoPreview.react');
 
+function getEntityModelState() {
+    return {
+        entityModel: HookEntityInfoStore.getEntityModel()
+    };
+}
+
 var HookEntityInfoApp = React.createClass({
     getInitialState: function() {
-        return {
-            entityModel: {
-                moduleName: 'moduleName',
-                label: 'label',
-                baseTable: 'baseTable'
-            }
-        };
+        return getEntityModelState();
+    },
+
+    componentDidMount: function() {
+        HookEntityInfoStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function() {
+        HookEntityInfoStore.removeChangeListener(this._onChange);
     },
 
     render: function() {
@@ -20,6 +29,13 @@ var HookEntityInfoApp = React.createClass({
                 <EntityInfoPreview entityModel={this.state.entityModel} />
             </section>
         );
+    },
+
+    /**
+     * Event handler for 'change' events coming from the HookEntityInfoStore
+     */
+    _onChange: function() {
+        this.setState(getEntityModelState());
     }
 });
 

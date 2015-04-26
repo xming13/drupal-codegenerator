@@ -1,4 +1,5 @@
 var React = require('react');
+var HookEntityInfoActions = require('../../actions/HookEntityInfoActions');
 var _ = require('underscore');
 
 var mui = require('material-ui');
@@ -8,11 +9,31 @@ var ERROR_TEXT_REQUIRED = 'This field is required.';
 
 var EntityInfoForm = React.createClass({
     getInitialState: function() {
-        return _.extend(this.props.entityModel, {errorText: ERROR_TEXT_REQUIRED});
+        return _.extend(this.props.entityModel,
+            {
+                errorTextModuleName: ERROR_TEXT_REQUIRED,
+                errorTextBaseTable: ERROR_TEXT_REQUIRED,
+                errorTextLabel: ERROR_TEXT_REQUIRED
+            });
     },
 
     componentDidMount: function() {
         this.refs.txtModuleName.focus();
+    },
+
+    handleChangeModuleName: function() {
+        this.setState({errorTextModuleName: event.target.value == '' ? ERROR_TEXT_REQUIRED : ''});
+        HookEntityInfoActions.updateEntityModel({moduleName: event.target.value});
+    },
+
+    handleChangeBaseTable: function() {
+        this.setState({errorTextBaseTable: event.target.value == '' ? ERROR_TEXT_REQUIRED : ''});
+        HookEntityInfoActions.updateEntityModel({baseTable: event.target.value});
+    },
+
+    handleChangeLabel: function() {
+        this.setState({errorTextLabel: event.target.value == '' ? ERROR_TEXT_REQUIRED : ''});
+        HookEntityInfoActions.updateEntityModel({label: event.target.value});
     },
 
     render: function() {
@@ -20,23 +41,26 @@ var EntityInfoForm = React.createClass({
             <div className='form-hook-entity-info col-sm-7'>
                 <TextField
                     ref='txtModuleName'
+                    onChange={this.handleChangeModuleName}
                     defaultValue={this.state.moduleName}
-                    errorText={this.state.errorText}
+                    errorText={this.state.errorTextModuleName}
                     floatingLabelText='Module Name'/>
 
                 <br/>
 
                 <TextField
-                    defaultValue={this.state.label}
-                    errorText={this.state.errorText}
-                    floatingLabelText='Label'/>
+                    onChange={this.handleChangeBaseTable}
+                    defaultValue={this.state.baseTable}
+                    errorText={this.state.errorTextBaseTable}
+                    floatingLabelText='Base Table'/>
 
                 <br/>
 
                 <TextField
-                    defaultValue={this.state.baseTable}
-                    errorText={this.state.errorText}
-                    floatingLabelText='Base Table'/>
+                    onChange={this.handleChangeLabel}
+                    defaultValue={this.state.label}
+                    errorText={this.state.errorTextLabel}
+                    floatingLabelText='Label'/>
             </div>
         );
     }
