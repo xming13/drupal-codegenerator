@@ -7,6 +7,7 @@ var _ = require('underscore');
 var CHANGE_EVENT = 'change';
 
 var _schemaModel = {
+    moduleName: '',
     tableName: '',
     tableDescription: '',
     tableFields: []
@@ -119,7 +120,7 @@ function updateTableFields(tableFields) {
  * @param  {object} schemaModel
  */
 function updateSchema(schemaModel) {
-    _schemaModel = schemaModel;
+    _.extend(_schemaModel, schemaModel);
 }
 
 var HookSchemaStore = assign({}, EventEmitter.prototype, {
@@ -162,16 +163,6 @@ AppDispatcher.register(function(action) {
 
         case HookSchemaConstants.DESTROY_FIELD:
             destroy(action.id);
-            HookSchemaStore.emitChange();
-            break;
-
-        case HookSchemaConstants.UPDATE_TABLE_NAME:
-            updateTableName(action.tableName.trim());
-            HookSchemaStore.emitChange();
-            break;
-
-        case HookSchemaConstants.UPDATE_TABLE_DESCRIPTION:
-            updateTableDescription(action.tableDescription.trim());
             HookSchemaStore.emitChange();
             break;
 

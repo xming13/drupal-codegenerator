@@ -36,26 +36,6 @@ var HookSchemaActions = {
     },
 
     /**
-     * @param  {string} tableName
-     */
-    updateTableName: function(tableName) {
-        AppDispatcher.dispatch({
-            actionType: HookSchemaConstants.UPDATE_TABLE_NAME,
-            tableName: tableName
-        });
-    },
-
-    /**
-     * @param  {string} tableDescription
-     */
-    updateTableDescription: function(tableDescription) {
-        AppDispatcher.dispatch({
-            actionType: HookSchemaConstants.UPDATE_TABLE_DESCRIPTION,
-            tableDescription: tableDescription
-        });
-    },
-
-    /**
      *  {object} @param tableFields
      */
     updateTableFields: function(tableFields) {

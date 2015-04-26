@@ -34,15 +34,17 @@ var SchemaPreview = React.createClass({
     },
 
     render: function() {
-        var schemaPreviewFields = this.props.schemaModel.tableFields.map(function(tableField, index) {
+        var schemaModel = this.props.schemaModel;
+
+        var schemaPreviewFields = schemaModel.tableFields.map(function(tableField, index) {
             return (<SchemaPreviewField tableField={tableField} key={index}/>);
         });
 
-        var indexes = _.map(this.props.schemaModel.tableFields, function(tableField) {
+        var indexes = _.map(schemaModel.tableFields, function(tableField) {
             return "      '" + tableField.fieldName + "' => array('" + tableField.fieldName + "'),\n"
         }).join('');
 
-        var primaryKeys = _.map(_.where(this.props.schemaModel.tableFields, {type: 'serial'}), function(tableField) {
+        var primaryKeys = _.map(_.where(schemaModel.tableFields, {type: 'serial'}), function(tableField) {
             return "'" + tableField.fieldName + "'";
         }).join(', ');
 
@@ -53,9 +55,9 @@ var SchemaPreview = React.createClass({
                         <IconButton className='copy' iconClassName='mdi mdi-content-copy' tooltip="Copy" onClick={this.clickCopy}/>
                     </ReactZeroClipboard>
                     <code className='php' ref='code'>
-                        {'function hook_schema() {\n'}
-                        {'  $schema[\''}{this.props.schemaModel.tableName}{'\'] = array(\n'}
-                        {'    \'description\' => \''}{this.props.schemaModel.tableDescription}{'\',\n'}
+                        {'function '}{schemaModel.moduleName}{'_schema() {\n'}
+                        {'  $schema[\''}{schemaModel.tableName}{'\'] = array(\n'}
+                        {'    \'description\' => \''}{schemaModel.tableDescription}{'\',\n'}
                         {'    \'fields\' => array(\n'}
                         {schemaPreviewFields}
                         {'    ),\n'}

@@ -23,8 +23,12 @@ var SchemaFormFieldList = React.createClass({
         });
         KeyboardJS.on('ctrl + alt + d', function() {
             if (!_.isEmpty(self.props.tableFields)) {
-                var newestId = _.max(_.pluck(self.props.tableFields, 'id'));
-                HookSchemaActions.destroy(newestId);
+                // this is to prevent odd result that
+                // when textfield is onfocus, it is not removed from the UI
+                document.activeElement.blur();
+
+                var largestId = _.max(_.pluck(self.props.tableFields, 'id'));
+                HookSchemaActions.destroy(largestId);
             };
         });
     },
