@@ -19,6 +19,7 @@
     "mdi": "^1.0.62-beta",
     "react-bootstrap": "^0.21.0",
     "react-tap-event-plugin": "^0.1.6",
+    "react-zeroclipboard": "^1.0.0",
     "reactify": "^0.15.2",
     "uglify-js": "~2.4.15",
     "underscore": "^1.8.3",

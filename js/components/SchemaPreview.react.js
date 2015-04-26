@@ -1,8 +1,25 @@
 var React = require('react');
 var SchemaPreviewField = require('./SchemaPreviewField.react');
 var _ = require('underscore');
+var ReactZeroClipboard = require('react-zeroclipboard');
+var mui = require('material-ui');
+var IconButton = mui.IconButton;
+var Snackbar = mui.Snackbar;
 
 var SchemaPreview = React.createClass({
+    getCopiedText: function() {
+        var code = document.querySelector('.hook-schema-code code');
+        return code.textContent;
+    },
+
+    clickCopy: function() {
+        this.refs.snackbar.show();
+    },
+
+    _handleAction: function(e) {
+        console.log('_handleAction', e);
+    },
+
     render: function() {
         var schemaPreviewFields = this.props.schemaModel.tableFields.map(function(tableField, index) {
             return (<SchemaPreviewField tableField={tableField} key={index}/>);
@@ -19,7 +36,10 @@ var SchemaPreview = React.createClass({
         return (
             <div className='hook-schema-code'>
                 <pre>
-                    <code className='php'>
+                    <ReactZeroClipboard getText={this.getCopiedText}>
+                        <IconButton className='copy' iconClassName='mdi mdi-content-copy' tooltip="Copy" onClick={this.clickCopy}/>
+                    </ReactZeroClipboard>
+                    <code className='php' ref='code'>
                         {'function hook_schema() {\n'}
                         {'  $schema[\''}{this.props.schemaModel.tableName}{'\'] = array(\n'}
                         {'    \'description\' => \''}{this.props.schemaModel.tableDescription}{'\',\n'}
@@ -34,6 +54,10 @@ var SchemaPreview = React.createClass({
                         }
                     </code>
                 </pre>
+                <Snackbar
+                    ref='snackbar'
+                    className='copied'
+                    message='Copied!'/>
             </div>
         );
     }
