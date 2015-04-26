@@ -1,10 +1,12 @@
 var React = require('react');
 var HookSchemaActions = require('../actions/HookSchemaActions');
+var SchemaFormFieldList = require('./SchemaFormFieldList.react');
+
+var _ = require('underscore');
+
+var Input = require('react-bootstrap/lib/Input');
 var mui = require('material-ui');
 var TextField = mui.TextField;
-var Input = require('react-bootstrap/lib/Input');
-var SchemaFormFieldList = require('./SchemaFormFieldList.react');
-var _ = require('underscore');
 
 var ERROR_TEXT_REQUIRED = 'This field is required.';
 

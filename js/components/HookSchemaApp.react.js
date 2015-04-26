@@ -5,11 +5,11 @@
 
 var React = require('react');
 var HookSchemaStore = require('../stores/HookSchemaStore');
-var hljs = require('highlight.js');
-
 var Header = require('./Header.react');
 var SchemaForm = require('./SchemaForm.react');
 var SchemaPreview = require('./SchemaPreview.react');
+
+var hljs = require('highlight.js');
 
 function getSchemaModelState() {
     return {

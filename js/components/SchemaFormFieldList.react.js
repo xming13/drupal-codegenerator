@@ -1,26 +1,15 @@
 var React = require('react');
 var HookSchemaActions = require('../actions/HookSchemaActions');
 var HookSchemaConstants = require('../constants/HookSchemaConstants');
-var KeyboardJS = require('keyboardjs');
 var SchemaFormField = require('./SchemaFormField.react');
 
-var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar');
-var Button = require('react-bootstrap/lib/Button');
-var Input = require('react-bootstrap/lib/Input');
+var KeyboardJS = require('keyboardjs');
+var _ = require('underscore');
 
 var mui = require('material-ui');
 var RaisedButton = mui.RaisedButton;
-var TextField = mui.TextField;
-var Paper = mui.Paper;
-var FontIcon = mui.FontIcon;
 
 var SchemaFormFieldList = React.createClass({
-    getInitialState: function() {
-        return {
-            tableFields: this.props.tableFields
-        };
-    },
-
     componentDidMount: function() {
         var self = this;
         KeyboardJS.on('ctrl + alt + i', function() {
@@ -32,12 +21,19 @@ var SchemaFormFieldList = React.createClass({
         KeyboardJS.on('ctrl + alt + v', function() {
             self.clickAddVarcharField();
         });
+        KeyboardJS.on('ctrl + alt + d', function() {
+            if (!_.isEmpty(self.props.tableFields)) {
+                var newestId = _.max(_.pluck(self.props.tableFields, 'id'));
+                HookSchemaActions.destroy(newestId);
+            };
+        });
     },
 
     componentWillUnmount: function() {
         KeyboardJS.clear('ctrl + alt + i');
         KeyboardJS.clear('ctrl + alt + s');
         KeyboardJS.clear('ctrl + alt + v');
+        KeyboardJS.clear('ctrl + alt + d');
     },
 
     clickAddVarcharField: function() {
@@ -53,15 +49,7 @@ var SchemaFormFieldList = React.createClass({
     render: function() {
         var renderedTableFields = this.props.tableFields.map(function(tableField, index) {
             return (
-                <div className='col-sm-4' key={index}>
-                    <Paper className={'paper-table-field paper-table-field-' + tableField.type} zDepth={2} key={index} innerClassName='paper-inner-container'>
-                        <label>{tableField.type}</label>
-
-                        <br/>
-
-                        <SchemaFormField tableField={tableField} />
-                    </Paper>
-                </div>
+                <SchemaFormField tableField={tableField} key={index} />
             );
         });
 

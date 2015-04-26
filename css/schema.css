@@ -1997,6 +1997,20 @@ body {
 .paper-inner-container {
   padding: 10px 10px 20px; }
 
+.delete {
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  float: right;
+  color: rgba(255, 0, 0, 0.6);
+  cursor: pointer; }
+  .delete:hover {
+    color: red; }
+  .delete .glyphicon-remove {
+    font-size: 18px; }
+  .delete .mui-icon-button-tooltip {
+    margin-top: 26px; }
+
 .input-small {
   width: 128px; }
 
