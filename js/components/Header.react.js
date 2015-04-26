@@ -1,4 +1,5 @@
 var React = require('react');
+var KeyboardJS = require('keyboardjs');
 
 var mui = require('material-ui');
 var Toolbar = mui.Toolbar;
@@ -8,6 +9,22 @@ var IconButton = mui.IconButton;
 var Dialog = mui.Dialog;
 
 var Header = React.createClass({
+    componentDidMount: function() {
+        var self = this;
+        KeyboardJS.on('ctrl + ?, ctrl + /', function() {
+            self.clickShortcut();
+        });
+        KeyboardJS.on('esc', function() {
+            self.refs.shortcut.dismiss();
+            self.refs.info.dismiss();
+        });
+    },
+
+    componentWillUnmount: function() {
+        KeyboardJS.clear('ctrl + ?, ctrl + /');
+        KeyboardJS.clear('esc');
+    },
+
     clickShortcut: function() {
         this.refs.shortcut.show();
     },
@@ -50,6 +67,8 @@ var Header = React.createClass({
                     Ctrl + Alt + S: Add a new serial field
                     <br/><br/>
                     Ctrl + Alt + D: Delete the last added field
+                    <br/><br/>
+                    Ctrl + ? or Ctrl + /: Open this shortcut key dialog
                 </Dialog>
                 <Dialog
                     ref='info'
