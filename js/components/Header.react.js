@@ -36,7 +36,6 @@ var Header = React.createClass({
                     ref='shortcut'
                     title="Shortcut keys"
                     actions={standardActions}
-                    actionFocus="ok"
                     modal={true}
                     openImmediately={false}>
                     Ctrl + Alt + V: Add a new varchar field
