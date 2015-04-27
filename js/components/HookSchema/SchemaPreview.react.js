@@ -55,6 +55,9 @@ var SchemaPreview = React.createClass({
                         <IconButton className='copy' iconClassName='mdi mdi-content-copy' tooltip="Copy" onClick={this.clickCopy}/>
                     </ReactZeroClipboard>
                     <code className='php' ref='code'>
+                        {'/**\n'}
+                        {' * Implements hook_schema().\n'}
+                        {' */\n'}
                         {'function '}{schemaModel.moduleName}{'_schema() {\n'}
                         {'  $schema[\''}{schemaModel.tableName}{'\'] = array(\n'}
                         {'    \'description\' => \''}{schemaModel.tableDescription}{'\',\n'}

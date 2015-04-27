@@ -42,6 +42,9 @@ var EntityInfoPreview = React.createClass({
                         <IconButton className='copy' iconClassName='mdi mdi-content-copy' tooltip="Copy" onClick={this.clickCopy}/>
                     </ReactZeroClipboard>
                     <code className='php' ref='code'>
+                        {'/**\n'}
+                        {' * Implements hook_entity_info().\n'}
+                        {' */\n'}
                         {'function '}{entityModel.moduleName}{'_entity_info() {\n'}
                         {'  $info = array(\n'}
                         {'    \''}{entityModel.baseTable}{'\' => array(\n'}
