@@ -1,6 +1,7 @@
 var React = require('react');
 var ReactZeroClipboard = require('react-zeroclipboard');
 var hljs = require('highlight.js');
+var s = require('underscore.string');
 
 var mui = require('material-ui');
 var IconButton = mui.IconButton;
@@ -33,7 +34,11 @@ var EntityInfoPreview = React.createClass({
     render: function() {
         var entityModel = this.props.entityModel;
         var labelCallback = entityModel.baseTable + '_label';
-        var controllerClass = entityModel.baseTable + 'APIController';
+        var uriCallback = entityModel.baseTable + '_uri';
+        var accessCallback = entityModel.baseTable + '_access';
+        var className = s.classify(entityModel.baseTable);
+        var apiControllerClass = className + 'APIController';
+        var uiControllerClass = className + 'UIController';
 
         return (
             <div className='hook-entity-info-code'>
@@ -51,7 +56,14 @@ var EntityInfoPreview = React.createClass({
                         {'      \'base table\' => \''}{entityModel.baseTable}{'\',\n'}
                         {'      \'label\' => t(\''}{entityModel.label}{'\'),\n'}
                         {'      \'label callback\' => \''}{labelCallback}{'\',\n'}
-                        {'      \'controller class\' => \''}{controllerClass}{'\',\n'}
+                        {'      \'uri callback\' => \''}{uriCallback}{'\',\n'}
+                        {'      \'access callback\' => \''}{accessCallback}{'\',\n'}
+                        {'      \'controller class\' => \''}{apiControllerClass}{'\',\n'}
+                        {'      \'admin ui\' => array(\n'}
+                        {'        \'path\' => \'admin/structure/'}{entityModel.baseTable.replace('_', '-')}{'\',\n'}
+                        {'        \'controller class\' => \''}{uiControllerClass}{'\',\n'}
+                        {'        \'file\' => \''}{entityModel.moduleName}{'.admin.inc\',\n'}
+                        {'      ),\n'}
                         {'      \'module\' => \''}{entityModel.moduleName}{'\',\n'}
                         {'    ),\n'}
                         {'  );\n'}
