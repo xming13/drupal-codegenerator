@@ -12,10 +12,10 @@ var ERROR_TEXT_REQUIRED = 'This field is required.';
 
 var SchemaForm = React.createClass({
     getInitialState: function() {
-        return _.extend(this.props.schemaModel, {
+        return {
             errorTextTableName: ERROR_TEXT_REQUIRED,
             errorTextModuleName: ERROR_TEXT_REQUIRED
-        });
+        };
     },
 
     componentDidMount: function() {
@@ -37,10 +37,11 @@ var SchemaForm = React.createClass({
     },
 
     render: function() {
+        var schemaModel = this.props.schemaModel;
         return (
             <div className='form-hook-schema col-sm-7'>
                 <TextField
-                    defaultValue={this.state.moduleName}
+                    defaultValue={schemaModel.moduleName}
                     errorText={this.state.errorTextModuleName}
                     floatingLabelText='Module Name'
                     ref='txtModuleName'
@@ -49,7 +50,7 @@ var SchemaForm = React.createClass({
                 <br/>
 
                 <TextField
-                    defaultValue={this.state.tableName}
+                    defaultValue={schemaModel.tableName}
                     errorText={this.state.errorTextTableName}
                     floatingLabelText='Table Name'
                     onChange={this.handleChangeTableName} />
@@ -57,13 +58,13 @@ var SchemaForm = React.createClass({
                 <br/>
 
                 <TextField
-                    defaultValue={this.state.tableDescription}
+                    defaultValue={schemaModel.tableDescription}
                     floatingLabelText='Description'
                     onChange={this.handleChangeTableDescription} />
 
                 <br/>
 
-                <SchemaFormFieldList tableFields={this.state.tableFields}/>
+                <SchemaFormFieldList tableFields={schemaModel.tableFields}/>
             </div>
         );
     }
