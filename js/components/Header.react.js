@@ -7,6 +7,7 @@ var ToolbarGroup = mui.ToolbarGroup;
 var DropDownMenu = mui.DropDownMenu;
 var IconButton = mui.IconButton;
 var Dialog = mui.Dialog;
+var FlatButton = mui.FlatButton;
 
 var Header = React.createClass({
     componentDidMount: function() {
@@ -37,14 +38,34 @@ var Header = React.createClass({
         this.refs.info.show();
     },
 
+    clickShortcutOk: function() {
+        this.refs.shortcut.dismiss();
+    },
+
+    clickInfoOk: function() {
+        this.refs.info.dismiss();
+    },
+
     render: function() {
         var mainMenuItems = [
             { payload: '1', text: 'Hook Schema' },
             { payload: '2', text: 'Hook Entity Info' }
         ];
 
-        var standardActions = [
-            { text: 'OK', ref: 'ok' }
+        var shortcutActions = [
+            <FlatButton
+                label='OK'
+                ref='ok'
+                primary={true}
+                onClick={this.clickShortcutOk}/>
+        ];
+
+        var infoActions = [
+            <FlatButton
+            label='OK'
+            ref='ok'
+            primary={true}
+            onClick={this.clickInfoOk}/>
         ];
 
         return (
@@ -61,9 +82,8 @@ var Header = React.createClass({
                 <Dialog
                     ref='shortcut'
                     title="Shortcut keys"
-                    actions={standardActions}
-                    modal={true}
-                    openImmediately={false}>
+                    actions={shortcutActions}
+                    modal={true}>
                     <label>Ctrl + Alt + V</label>
                     <br/>
                     Add a new varchar field
@@ -87,8 +107,8 @@ var Header = React.createClass({
                 <Dialog
                     ref='info'
                     title='Drupal code generator'
-                    actions={standardActions}
-                    model={true}>
+                    actions={infoActions}
+                    modal={true}>
                     {'Made with ReactJS and Material UI '}<i className="mdi mdi-heart"></i>
                 </Dialog>
             </div>

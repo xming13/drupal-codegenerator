@@ -2,7 +2,7 @@
 
 #content {
   height: 100%;
-  background-color: $light-blue-100;
+  background-color: #FFF5F5;
   overflow: auto;
 }
 
@@ -14,26 +14,47 @@
 
 .main-toolbar {
   position: fixed;
-  background-color: $light-blue-500;
+  background-color: #e21f0c;
+  border-bottom: 4px solid #b5190a;
+  color: #fff;
   z-index: 1;
+
+  .mui-toolbar-group .mui-drop-down-menu {
+    color: #fff;
+  }
+
+  .mui-toolbar-group .mui-font-icon.mdi {
+    // reset to fix the position
+    line-height: normal;
+    padding-left: 0;
+    color: #fff;
+  }
 }
 
-.mui-toolbar .mui-toolbar-group .mui-font-icon.mdi {
-  // reset to fix the position
-  line-height: normal;
-  padding-left: 0;
+.mui-drop-down-menu .mui-menu-control .mui-menu-drop-down-icon * {
+  fill: #fff;
 }
 
-.btn-field-varchar .mui-raised-button-container {
-  background-color: $deep-orange-200;
+.mui-menu {
+  background: #FFBCBC;
 }
 
-.btn-field-int .mui-raised-button-container {
-  background-color: $orange-200;
+.mui-menu-item.mui-is-selected {
+  color: #FF2424;
 }
 
-.btn-field-serial .mui-raised-button-container {
-  background-color: $yellow-200;
+.mui-dialog .mui-dialog-title {
+  padding: 24px 24px 16px;
+  background: #e21f0c;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.btn-field-varchar,
+.btn-field-int,
+.btn-field-serial {
+  margin-right: 10px;
 }
 
 .paper-table-field {
@@ -41,15 +62,12 @@
 }
 
 .paper-table-field-varchar {
-  background-color: $deep-orange-100;
 }
 
 .paper-table-field-int {
-  background-color: $orange-100;
 }
 
 .paper-table-field-serial {
-  background-color: $yellow-100;
 }
 
 .paper-inner-container {
@@ -95,7 +113,7 @@
   overflow: auto;
 
   & pre {
-    border: 4px solid $blue-800;
+    border: 4px solid #b5190a;
   }
 
   .copy {

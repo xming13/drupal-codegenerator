@@ -1972,7 +1972,7 @@ body {
 
 #content {
   height: 100%;
-  background-color: #b3e5fc;
+  background-color: #FFF5F5;
   overflow: auto; }
 
 .hook-schema-container,
@@ -1982,33 +1982,40 @@ body {
 
 .main-toolbar {
   position: fixed;
-  background-color: #03a9f4;
+  background-color: #e21f0c;
+  border-bottom: 4px solid #b5190a;
+  color: #fff;
   z-index: 1; }
+  .main-toolbar .mui-toolbar-group .mui-drop-down-menu {
+    color: #fff; }
+  .main-toolbar .mui-toolbar-group .mui-font-icon.mdi {
+    line-height: normal;
+    padding-left: 0;
+    color: #fff; }
 
-.mui-toolbar .mui-toolbar-group .mui-font-icon.mdi {
-  line-height: normal;
-  padding-left: 0; }
+.mui-drop-down-menu .mui-menu-control .mui-menu-drop-down-icon * {
+  fill: #fff; }
 
-.btn-field-varchar .mui-raised-button-container {
-  background-color: #ffab91; }
+.mui-menu {
+  background: #FFBCBC; }
 
-.btn-field-int .mui-raised-button-container {
-  background-color: #ffcc80; }
+.mui-menu-item.mui-is-selected {
+  color: #FF2424; }
 
-.btn-field-serial .mui-raised-button-container {
-  background-color: #fff59d; }
+.mui-dialog .mui-dialog-title {
+  padding: 24px 24px 16px;
+  background: #e21f0c;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff; }
+
+.btn-field-varchar,
+.btn-field-int,
+.btn-field-serial {
+  margin-right: 10px; }
 
 .paper-table-field {
   margin: 10px 0; }
-
-.paper-table-field-varchar {
-  background-color: #ffccbc; }
-
-.paper-table-field-int {
-  background-color: #ffe0b2; }
-
-.paper-table-field-serial {
-  background-color: #fff9c4; }
 
 .paper-inner-container {
   padding: 10px 10px 20px; }
@@ -2044,7 +2051,7 @@ body {
   overflow: auto; }
   .hook-schema-code pre,
   .hook-entity-info-code pre {
-    border: 4px solid #1565c0; }
+    border: 4px solid #b5190a; }
   .hook-schema-code .copy,
   .hook-entity-info-code .copy {
     position: absolute;
