@@ -20,7 +20,7 @@ var SchemaFormField = React.createClass({
             this.refs.textfield.focus();
         }
         else {
-            this.refs.textfield.clear();
+            this.refs.textfield.blur();
         }
     },
 

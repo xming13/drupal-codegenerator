@@ -54,6 +54,7 @@ var Header = React.createClass({
 
         var shortcutActions = [
             <FlatButton
+                key={1}
                 label='OK'
                 ref='ok'
                 primary={true}
@@ -62,10 +63,11 @@ var Header = React.createClass({
 
         var infoActions = [
             <FlatButton
-            label='OK'
-            ref='ok'
-            primary={true}
-            onClick={this.clickInfoOk}/>
+                key={1}
+                label='OK'
+                ref='ok'
+                primary={true}
+                onClick={this.clickInfoOk}/>
         ];
 
         return (
