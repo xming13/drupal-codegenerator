@@ -18,6 +18,9 @@ var EntityInfoForm = React.createClass({
     },
 
     componentDidMount: function() {
+        this.setState({errorTextModuleName: this.refs.txtModuleName.getValue() == '' ? ERROR_TEXT_REQUIRED : ''});
+        this.setState({errorTextBaseTable: this.refs.txtBaseTable.getValue() == '' ? ERROR_TEXT_REQUIRED : ''});
+        this.setState({errorTextLabel: this.refs.txtLabel.getValue() == '' ? ERROR_TEXT_REQUIRED : ''});
         this.refs.txtModuleName.focus();
     },
 
@@ -49,6 +52,7 @@ var EntityInfoForm = React.createClass({
                 <br/>
 
                 <TextField
+                    ref='txtBaseTable'
                     onChange={this.handleChangeBaseTable}
                     defaultValue={this.state.baseTable}
                     errorText={this.state.errorTextBaseTable}
@@ -57,6 +61,7 @@ var EntityInfoForm = React.createClass({
                 <br/>
 
                 <TextField
+                    ref='txtLabel'
                     onChange={this.handleChangeLabel}
                     defaultValue={this.state.label}
                     errorText={this.state.errorTextLabel}

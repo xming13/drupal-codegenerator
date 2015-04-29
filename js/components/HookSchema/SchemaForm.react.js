@@ -19,6 +19,8 @@ var SchemaForm = React.createClass({
     },
 
     componentDidMount: function() {
+        this.setState({errorTextTableName: this.refs.txtTableName.getValue() == '' ? ERROR_TEXT_REQUIRED : ''})
+        this.setState({errorTextModuleName: this.refs.txtModuleName.getValue() == '' ? ERROR_TEXT_REQUIRED : ''})
         this.refs.txtModuleName.focus();
     },
 
@@ -41,15 +43,16 @@ var SchemaForm = React.createClass({
         return (
             <div className='form-hook-schema col-sm-7'>
                 <TextField
+                    ref='txtModuleName'
                     defaultValue={schemaModel.moduleName}
                     errorText={this.state.errorTextModuleName}
                     floatingLabelText='Module Name'
-                    ref='txtModuleName'
                     onChange={this.handleChangeModuleName} />
 
                 <br/>
 
                 <TextField
+                    ref='txtTableName'
                     defaultValue={schemaModel.tableName}
                     errorText={this.state.errorTextTableName}
                     floatingLabelText='Table Name'
