@@ -132,3 +132,22 @@
   }
 }
 
+// Animation
+.table-field-enter {
+  opacity: 0.01;
+  transition: opacity .2s linear;
+}
+
+.table-field-enter.table-field-enter-active {
+  opacity: 1;
+}
+
+.table-field-leave {
+  opacity: 1;
+  transition: opacity .2s ease-in;
+}
+
+.table-field-leave.table-field-leave-active {
+  opacity: 0.01;
+}
+

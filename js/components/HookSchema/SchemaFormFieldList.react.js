@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var HookSchemaActions = require('../../actions/HookSchemaActions');
 var HookSchemaConstants = require('../../constants/HookSchemaConstants');
 var SchemaFormField = require('./SchemaFormField.react');
@@ -49,11 +50,10 @@ var SchemaFormFieldList = React.createClass({
     clickAddSerialField: function() {
         HookSchemaActions.create(HookSchemaConstants.FIELD_TYPE_SERIAL);
     },
-
     render: function() {
         var renderedTableFields = this.props.tableFields.map(function(tableField, index) {
             return (
-                <SchemaFormField tableField={tableField} key={index} />
+                <SchemaFormField tableField={tableField} key={tableField.id} />
             );
         });
 
@@ -65,7 +65,9 @@ var SchemaFormFieldList = React.createClass({
 
                 <br/>
 
-                {renderedTableFields}
+                <ReactCSSTransitionGroup transitionName="table-field">
+                    {renderedTableFields}
+                </ReactCSSTransitionGroup>
             </div>
         );
     }
