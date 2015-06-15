@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var HookSchemaActions = require('../../actions/HookSchemaActions');
 
 var mui = require('material-ui');
